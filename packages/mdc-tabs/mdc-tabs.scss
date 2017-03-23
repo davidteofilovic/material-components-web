@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-import * as util from './util';
+@import "@material/animation/functions";
+@import "@material/typography/mixins";
+@import "@material/theme/mixins";
+@import "@material/rtl/mixins";
 
-export {MDCTabFoundation, MDCTab} from './tab';
-export {MDCTabsFoundation, MDCTabs} from './tabs';
-export {MDCTabsScrollerFoundation, MDCTabsScroller} from './tabs-scroller';
-export {util};
+// postcss-bem-linter: define tabs 
+// postcss-bem-linter: end

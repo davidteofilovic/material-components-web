@@ -1,5 +1,5 @@
 /**
- * Copyright 2016 Google Inc. All Rights Reserved.
+ * Copyright 2017 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 import MDCComponent from '@material/base/component';
 
-import {MDCTab} from './tab';
+import {MDCTab} from '../tab';
 import {strings} from './constants';
 import MDCTabsFoundation from './foundation';
 
@@ -63,7 +63,7 @@ export class MDCTabs extends MDCComponent {
     };
   }
 
-  getDefaultAdapter() {
+  getDefaultFoundation() {
     return {
       addClass: (className) => this.root_.classList.add(className),
       removeClass: (className) => this.root_.classList.remove(className),

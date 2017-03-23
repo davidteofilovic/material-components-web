@@ -41,11 +41,373 @@
   <body class="mdc-typography"> 
     <div class="demo-body">
 
+			<h1>Tabs</h1>
+			
+			<!-- TODO: Consider RTL, Dark Theme -->
+			
+			<section>
+			  <h2>Basic tabs</h2>
+			  <nav id="basic-tabs" class="mdc-tabs">
+			    <!-- Note that mdc-ripple-surface is used here for demo purposes only. mdc-tab would mix in the ripple in the actual impl -->
+			    <a class="mdc-tab mdc-ripple-surface mdc-tab--active" href="#one">Item One</a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#two">Item Two</a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#three">Three</a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<section>
+			  <h2>CSS-Only Tabs</h2>
+			  <nav class="mdc-tabs">
+			    <a class="mdc-tab mdc-tab--active" href="#one">Item One</a>
+			    <a class="mdc-tab" href="#two">Item Two</a>
+			    <a class="mdc-tab" href="#three">Three</a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<section>
+			  <h2>Scrollable tabs</h2>
+			  <div id="tabs-scroller" class="mdc-tabs-scroller" data-md-autoinit>
+			    <div class="mdc-tabs-scroller__tabs-wrapper">
+			      <nav id="scrollable-tabs" class="mdc-tabs">
+			        <a class="mdc-tab mdc-ripple-surface mdc-tab--active" href="#one">Item One</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#two">New Arrivals in Item Two</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#three">Item Three</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#four">Item Four</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#four">Item Four</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#four">Item Four</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#four">Item Four</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#four">Item Four</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#four">Item Four</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#four">Item Four</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#four">Item Four</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#four">Item Four</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#five">Item Five</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#six">Item Six</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#seven">Item Seven</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#eight">Item Eight</a>
+			        <span class="mdc-tabs__indicator"></span>
+			      </nav>
+			    </div>
+			    <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--left">
+			      <a class="mdc-tabs-scroller__indicator__inner material-icons" href="#">
+			        keyboard_arrow_left
+			      </a>
+			    </div>
+			    <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--right">
+			      <a class="mdc-tabs-scroller__indicator__inner material-icons" href="#">
+			        keyboard_arrow_right
+			      </a>
+			    </div>
+			  </div>
+			</section>
+			
+			<section>
+			  <h2>Icon tabs</h2>
+			  <nav id="icon-tabs" class="mdc-tabs mdc-tabs--icon-tabs">
+			    <a class="mdc-tab mdc-tab--active mdc-ripple-surface" href="#recents">
+			      <i class="material-icons mdc-tab__icon" aria-label="Recents">phone</i>
+			    </a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#favorites">
+			      <i class="material-icons mdc-tab__icon" aria-label="Favorites">favorite</i>
+			    </a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#nearby">
+			      <i class="material-icons mdc-tab__icon" aria-label="nearby">person_pin</i>
+			    </a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<section>
+			  <h2>CSS-Only Icon tabs</h2>
+			  <nav class="mdc-tabs mdc-tabs--icon-tabs">
+			    <a class="mdc-tab mdc-tab--active" href="#recents">
+			      <i class="material-icons mdc-tab__icon" aria-label="Recents">phone</i>
+			    </a>
+			    <a class="mdc-tab" href="#favorites">
+			      <i class="material-icons mdc-tab__icon" aria-label="Favorites">favorite</i>
+			    </a>
+			    <a class="mdc-tab" href="#nearby">
+			      <i class="material-icons mdc-tab__icon" aria-label="nearby">person_pin</i>
+			    </a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<section>
+			  <h2>Icons with text</h2>
+			  <nav id="icon-text-tabs" class="mdc-tabs mdc-tabs--icons-with-text">
+			    <a class="mdc-tab mdc-tab--active mdc-ripple-surface" href="#recents">
+			      <i class="material-icons mdc-tab__icon" aria-hidden="true">phone</i>
+			      <span class="mdc-tab__icon-text">Recents</span>
+			    </a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#favorites">
+			      <i class="material-icons mdc-tab__icon" aria-hidden="true">favorite</i>
+			      <span class="mdc-tab__icon-text">Favorites</span>
+			    </a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#nearby">
+			      <i class="material-icons mdc-tab__icon" aria-hidden="true">person_pin</i>
+			      <span class="mdc-tab__icon-text">Nearby</span>
+			    </a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<section>
+			  <h2>CSS-Only Icons with text</h2>
+			  <nav id="icon-text-tabs" class="mdc-tabs mdc-tabs--icons-with-text">
+			    <a class="mdc-tab mdc-tab--active" href="#recents">
+			      <i class="material-icons mdc-tab__icon" aria-hidden="true">phone</i>
+			      <span class="mdc-tab__icon-text">Recents</span>
+			    </a>
+			    <a class="mdc-tab" href="#favorites">
+			      <i class="material-icons mdc-tab__icon" aria-hidden="true">favorite</i>
+			      <span class="mdc-tab__icon-text">Favorites</span>
+			    </a>
+			    <a class="mdc-tab" href="#nearby">
+			      <i class="material-icons mdc-tab__icon" aria-hidden="true">person_pin</i>
+			      <span class="mdc-tab__icon-text">Nearby</span>
+			    </a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<!-- TODO: Primary/Accent Indicator, Primary/Accent Indicator CSS-Only -->
+			<section>
+			  <h2>Primary Color Indicator</h2>
+			  <nav id="primary-indicator-tabs" class="mdc-tabs mdc-tabs--indicator-primary">
+			    <a class="mdc-tab mdc-ripple-surface mdc-tab--active" href="#one">Item One</a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#two">Item Two</a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#three">Three</a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<section>
+			  <h2>Primary Color Indicator - CSS-Only</h2>
+			  <nav class="mdc-tabs mdc-tabs--indicator-primary">
+			    <a class="mdc-tab mdc-tab--active" href="#one">Item One</a>
+			    <a class="mdc-tab" href="#two">Item Two</a>
+			    <a class="mdc-tab" href="#three">Three</a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<section>
+			  <h2>Accent Color Indicator</h2>
+			  <nav id="accent-indicator-tabs" class="mdc-tabs mdc-tabs--indicator-accent">
+			    <a class="mdc-tab mdc-ripple-surface mdc-tab--active" href="#one">Item One</a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#two">Item Two</a>
+			    <a class="mdc-tab mdc-ripple-surface" href="#three">Three</a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<section>
+			  <h2>Accent Color Indicator - CSS-Only</h2>
+			  <nav class="mdc-tabs mdc-tabs--indicator-accent">
+			    <a class="mdc-tab mdc-tab--active" href="#one">Item One</a>
+			    <a class="mdc-tab" href="#two">Item Two</a>
+			    <a class="mdc-tab" href="#three">Three</a>
+			    <span class="mdc-tabs__indicator"></span>
+			  </nav>
+			</section>
+			
+			<section>
+			  <h2>Within mdc-toolbar</h2>
+			  <div class="mdc-toolbar">
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			      <h1 class="mdc-typography--title">My App</h2>
+			    </div>
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-end">
+			      <nav id="toolbar-tabs" class="mdc-tabs">
+			        <a class="mdc-tab mdc-ripple-surface mdc-tab--active" href="#one">Item One</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#two">Item Two</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#three">Item Three</a>
+			        <span class="mdc-tabs__indicator"></span>
+			      </nav>
+			    </div>
+			  </div>
+			</section>
+			
+			<section>
+			  <h2>Within mdc-toolbar, CSS-Only</h2>
+			  <div class="mdc-toolbar">
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			      <h1 class="mdc-typography--title">My App</h2>
+			    </div>
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-end">
+			      <nav class="mdc-tabs">
+			        <a class="mdc-tab mdc-tab--active" href="#one">Item One</a>
+			        <a class="mdc-tab" href="#two">Item Two</a>
+			        <a class="mdc-tab" href="#three">Item Three</a>
+			        <span class="mdc-tabs__indicator"></span>
+			      </nav>
+			    </div>
+			  </div>
+			</section>
+			
+			<section>
+			  <h2>Within mdc-toolbar + primary indicator</h2>
+			  <em>Note: Changing the toolbar's background color here so that the primary indicator can be visible</em>
+			  <div class="mdc-toolbar mdc-theme--accent-bg">
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			      <h1 class="mdc-typography--title">My App</h2>
+			    </div>
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-end">
+			      <nav id="toolbar-tabs-primary-indicator" class="mdc-tabs mdc-tabs--indicator-primary">
+			        <a class="mdc-tab mdc-ripple-surface mdc-tab--active" href="#one">Item One</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#two">Item Two</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#three">Item Three</a>
+			        <span class="mdc-tabs__indicator"></span>
+			      </nav>
+			    </div>
+			  </div>
+			</section>
+			
+			<section>
+			  <h2>Within mdc-toolbar + primary indicator, CSS-Only</h2>
+			  <div class="mdc-toolbar mdc-theme--accent-bg">
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			      <h1 class="mdc-typography--title">My App</h2>
+			    </div>
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-end">
+			      <nav class="mdc-tabs mdc-tabs--indicator-primary">
+			        <a class="mdc-tab mdc-tab--active" href="#one">Item One</a>
+			        <a class="mdc-tab" href="#two">Item Two</a>
+			        <a class="mdc-tab" href="#three">Item Three</a>
+			        <span class="mdc-tabs__indicator"></span>
+			      </nav>
+			    </div>
+			  </div>
+			</section>
+			
+			<section>
+			  <h2>Within mdc-toolbar + accent indicator</h2>
+			  <div class="mdc-toolbar">
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			      <h1 class="mdc-typography--title">My App</h2>
+			    </div>
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-end">
+			      <nav id="toolbar-tabs-accent-indicator" class="mdc-tabs mdc-tabs--indicator-accent">
+			        <a class="mdc-tab mdc-ripple-surface mdc-tab--active" href="#one">Item One</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#two">Item Two</a>
+			        <a class="mdc-tab mdc-ripple-surface" href="#three">Item Three</a>
+			        <span class="mdc-tabs__indicator"></span>
+			      </nav>
+			    </div>
+			  </div>
+			</section>
+			
+			<section>
+			  <h2>Within mdc-toolbar + accent indicator, CSS-Only</h2>
+			  <div class="mdc-toolbar">
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			      <h1 class="mdc-typography--title">My App</h2>
+			    </div>
+			    <div class="mdc-toolbar__section mdc-toolbar__section--align-end">
+			      <nav class="mdc-tabs mdc-tabs--indicator-accent">
+			        <a class="mdc-tab mdc-tab--active" href="#one">Item One</a>
+			        <a class="mdc-tab" href="#two">Item Two</a>
+			        <a class="mdc-tab" href="#three">Item Three</a>
+			        <span class="mdc-tabs__indicator"></span>
+			      </nav>
+			    </div>
+			  </div>
+			</section>
+			
+			<section>
+			  <h2>Within Toolbar, Dynamic Content Control</h2>
+			  <em>This uses custom CSS to line up the title and tabs. 
+			      Should it be rolled into toolbar/tabs/both?</em>
+			  <div class="mdc-toolbar FUTURE-mdc-toolbar" id="dynamic-demo-toolbar">
+			    <div class="mdc-toolbar__row">
+			      <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			        <h1 class="mdc-typography--display2">My App</h2>
+			      </div>
+			    </div>
+			    <div class="mdc-toolbar__row">
+			      <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
+			        <nav id="dynamic-tabs" class="mdc-tabs mdc-tabs--indicator-accent" role="tablist">
+			          <a role="tab" aria-controls="panel-1" 
+			             class="mdc-tab mdc-ripple-surface mdc-tab--active" href="#">Item One</a>
+			          <a role="tab" aria-controls="panel-2"
+			             class="mdc-tab mdc-ripple-surface" href="#">Item Two</a>
+			          <a role="tab" aria-controls="panel-3" 
+			             class="mdc-tab mdc-ripple-surface" href="#">Item Three</a>
+			          <span class="mdc-tabs__indicator"></span>
+			        </nav>
+			      </div>
+			    </div>
+			  </div>
+			  <section>
+			    <div class="panels">
+			      <p class="panel active" id="panel-1">Item One</p>
+			      <p class="panel" id="panel-2">Item Two</p>
+			      <p class="panel" id="panel-3">Item Three</p>
+			    </div>
+			    <div class="dots">
+			      <a class="dot active" data-trigger="panel-1" href="#"></a>
+			      <a class="dot" data-trigger="panel-2" href="#"></a>
+			      <a class="dot" data-trigger="panel-3" href="#"></a>
+			    </div>
+			  </section>
+			</section>
+			<!-- TODO: Outline color states and then Eng Outline!! -->
   	</div>
+
     <script src="assets/material-components-web.js" charset="utf-8"></script>
     <script>
       (function() {
-        
+        var basicTabs = new mdc.tabs.MDCTabs(document.querySelector('#basic-tabs'));
+        // window.scrollableTabs = new MDCTabs(document.querySelector('#scrollable-tabs'));
+        // window.tabsScroller = new MDCTabsScroller(document.querySelector('#tabs-scroller', window.scrollableTabs));
+        // window.iconTabs = new MDCTabs(document.querySelector('#icon-tabs'));
+        // window.iconTextTabs = new MDCTabs(document.querySelector('#icon-text-tabs'));
+        // window.toolbarTabs = new MDCTabs(document.querySelector('#toolbar-tabs'));
+        // window.primaryIndicatorTabs = new MDCTabs(document.querySelector('#primary-indicator-tabs'));
+        // window.accentIndicatorTabs = new MDCTabs(document.querySelector('#accent-indicator-tabs'));
+        // window.primaryIndicatorToolbarTabs = new MDCTabs(document.querySelector('#toolbar-tabs-primary-indicator'));
+        // window.accentIndicatorToolbarTabs = new MDCTabs(document.querySelector('#toolbar-tabs-accent-indicator'));
+
+        // var dynamicTabs = window.dynamicTabs = new MDCTabs(document.querySelector('#dynamic-tabs'));
+        // var dots = document.querySelector('.dots');
+        // var panels = document.querySelector('.panels');
+
+        // dynamicTabs.preventDefaultOnClick = true;
+        // dynamicTabs.el_.addEventListener('MDCTabs:change', function ({detail: tabs}) {
+        //   var nthChildIndex = tabs.activeTabIndex + 1;
+        //   var activeDot = dots.querySelector('.dot.active');
+        //   if (activeDot) {
+        //     activeDot.classList.remove('active');
+        //   }
+        //   var newActiveDot = dots.querySelector('.dot:nth-child(' + nthChildIndex + ')');
+        //   if (newActiveDot) {
+        //     newActiveDot.classList.add('active');
+        //   }
+
+        //   var activePanel = panels.querySelector('.panel.active');
+        //   if (activePanel) {
+        //     activePanel.classList.remove('active');
+        //   }
+        //   var newActivePanel = panels.querySelector('.panel:nth-child(' + nthChildIndex + ')');
+        //   if (newActivePanel) {
+        //     newActivePanel.classList.add('active');
+        //   }
+        // });
+
+        // dots.addEventListener('click', function (evt) {
+        //   if (!evt.target.classList.contains('dot')) {
+        //     return;
+        //   }
+
+        //   evt.preventDefault();
+        //   var dotIndex = [].slice.call(dots.querySelectorAll('.dot')).indexOf(evt.target);
+        //   if (dotIndex >= 0) {
+        //     dynamicTabs.switchToTabAtIndex(dotIndex)
+        //   }
+        // })
       })();
     </script>
   </body>
