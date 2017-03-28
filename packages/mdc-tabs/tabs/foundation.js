@@ -54,8 +54,10 @@ export default class MDCTabsFoundation extends MDCFoundation {
   constructor(adapter = {}) {
     super(Object.assign(MDCTabsFoundation.defaultAdapter, adapter));
 
+    this.tabs_ = this.gatherTabs_();
     this.isIndicatorShown_ = false;
     this.computedWidth_ = 0;
+    this.activeTab_ = this.findActiveTab_();
     this.activeTabIndex_ = 0;
     this.layoutFrame_ = 0;
     this.resizeHandler_ = () => this.layout();
@@ -82,6 +84,21 @@ export default class MDCTabsFoundation extends MDCFoundation {
       this.layoutInternal_();
       this.layoutFrame_ = 0;
     });
+  }
+  
+  findActiveTab_() {
+    var activeTab;
+    for (let tab of this.tabs_) {
+      if (tab.isActive) {
+        activeTab = tab;
+        break;
+      }
+    }
+    if (!activeTab) {
+      activeTab = this.tabs_[0];
+    }
+    activeTab.isActive = true;
+    return activeTab;
   }
 
   layoutInternal_() {

@@ -54,6 +54,10 @@ export class MDCTabs extends MDCComponent {
     return this.foundation_.getComputedWidth();
   }
 
+  get computedLeft() {
+    return this.computedLeft_;
+  }
+
   initialize(tabFactory = (el) => new MDCTab(el)) {
     this.indicator_ = this.root_.querySelector(strings.INDICATOR_SELECTOR);
     this.tabs_ = this.gatherTabs_(tabFactory);
@@ -64,11 +68,11 @@ export class MDCTabs extends MDCComponent {
   }
 
   getDefaultFoundation() {
-    return {
+    return new MDCTabsFoundation({
       addClass: (className) => this.root_.classList.add(className),
       removeClass: (className) => this.root_.classList.remove(className),
-      bindOnMDCTabSelectedEvent: () => this.on('MDCTab:selected', this.tabSelectedHandler_),
-      unbindOnMDCTabSelectedEvent: () => this.off('MDCTab:selected', this.tabSelectedHandler_),
+      // bindOnMDCTabSelectedEvent: () => this.on('MDCTab:selected', this.tabSelectedHandler_),
+      // unbindOnMDCTabSelectedEvent: () => this.off('MDCTab:selected', this.tabSelectedHandler_),
       registerResizeHandler: (handler) => window.addEventListener('resize', handler),
       deregisterResizeHandler: (handler) => window.removeEventListener('resize', handler),
       getOffsetWidth: () => this.root_.offsetWidth,
@@ -82,11 +86,11 @@ export class MDCTabs extends MDCComponent {
       setPreventDefaultOnClickForTabAtIndex: (index, preventDefaultOnClick) => {
         this.tabs[index].preventDefaultOnClick = preventDefaultOnClick;
       },
-      callMeasureSelfForTabAtIndex: (index) => this.tabs[index].measureSelf(),
+      callMeasureSelfForTabAtIndex: (index) => this.measureSelf_(this.tabs[index]),
       getComputedWidthForTabAtIndex: (index) => this.tabs[index].computedWidth,
       getComputedLeftForTabAtIndex: (index) => this.tabs[index].computedLeft,
       isRTL: () => getComputedStyle(this.root_).direction === 'rtl',
-    };
+		});
   }
 
   initialSyncWithDOM() {
@@ -116,5 +120,10 @@ export class MDCTabs extends MDCComponent {
       activeTabIndex = 0;
     }
     this.activeTabIndex = activeTabIndex;
+  }
+
+  measureSelf_() {
+    this.computedWidth_ = this.root_.offsetWidth;
+    this.computedLeft_ = this.root_.offsetLeft;
   }
 }

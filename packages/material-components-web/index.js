@@ -44,7 +44,7 @@ autoInit.register('MDCSimpleMenu', menu.MDCSimpleMenu);
 autoInit.register('MDCSnackbar', snackbar.MDCSnackbar);
 autoInit.register('MDCTab', tabs.MDCTab);
 autoInit.register('MDCTabs', tabs.MDCTabs);
-// autoInit.register('MDCTabsScroller', tabs.MDCTabsScroller);
+autoInit.register('MDCTabsScroller', tabs.MDCTabsScroller);
 autoInit.register('MDCTextfield', textfield.MDCTextfield);
 
 // Export all components.
