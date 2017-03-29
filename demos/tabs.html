@@ -112,7 +112,7 @@
 			    <a class="mdc-tab" href="#favorites">
 			      <i class="material-icons mdc-tab__icon" aria-label="Favorites">favorite</i>
 			    </a>
-			    <a class="mdc-tab mdc-ripple-surface" href="#nearby">
+			    <a class="mdc-tab" href="#nearby">
 			      <i class="material-icons mdc-tab__icon" aria-label="nearby">person_pin</i>
 			    </a>
 			    <span class="mdc-tabs__indicator"></span>
@@ -360,54 +360,54 @@
     <script src="assets/material-components-web.js" charset="utf-8"></script>
     <script>
       (function() {
-        var basicTabs = new mdc.tabs.MDCTabs(document.querySelector('#basic-tabs'));
-        // window.scrollableTabs = new MDCTabs(document.querySelector('#scrollable-tabs'));
-        // window.tabsScroller = new MDCTabsScroller(document.querySelector('#tabs-scroller', window.scrollableTabs));
-        // window.iconTabs = new MDCTabs(document.querySelector('#icon-tabs'));
-        // window.iconTextTabs = new MDCTabs(document.querySelector('#icon-text-tabs'));
-        // window.toolbarTabs = new MDCTabs(document.querySelector('#toolbar-tabs'));
-        // window.primaryIndicatorTabs = new MDCTabs(document.querySelector('#primary-indicator-tabs'));
-        // window.accentIndicatorTabs = new MDCTabs(document.querySelector('#accent-indicator-tabs'));
-        // window.primaryIndicatorToolbarTabs = new MDCTabs(document.querySelector('#toolbar-tabs-primary-indicator'));
-        // window.accentIndicatorToolbarTabs = new MDCTabs(document.querySelector('#toolbar-tabs-accent-indicator'));
+        window.basicTabs = new mdc.tabs.MDCTabs(document.querySelector('#basic-tabs'));
+        // window.scrollableTabs = new mdc.tabs.MDCTabs(document.querySelector('#scrollable-tabs'));
+        // window.tabsScroller = new mdc.tabs.MDCTabsScroller(document.querySelector('#tabs-scroller', window.scrollableTabs));
+        window.iconTabs = new mdc.tabs.MDCTabs(document.querySelector('#icon-tabs'));
+        window.iconTextTabs = new mdc.tabs.MDCTabs(document.querySelector('#icon-text-tabs'));
+        window.toolbarTabs = new mdc.tabs.MDCTabs(document.querySelector('#toolbar-tabs'));
+        window.primaryIndicatorTabs = new mdc.tabs.MDCTabs(document.querySelector('#primary-indicator-tabs'));
+        window.accentIndicatorTabs = new mdc.tabs.MDCTabs(document.querySelector('#accent-indicator-tabs'));
+        window.primaryIndicatorToolbarTabs = new mdc.tabs.MDCTabs(document.querySelector('#toolbar-tabs-primary-indicator'));
+        window.accentIndicatorToolbarTabs = new mdc.tabs.MDCTabs(document.querySelector('#toolbar-tabs-accent-indicator'));
 
-        // var dynamicTabs = window.dynamicTabs = new MDCTabs(document.querySelector('#dynamic-tabs'));
-        // var dots = document.querySelector('.dots');
-        // var panels = document.querySelector('.panels');
+        var dynamicTabs = window.dynamicTabs = new mdc.tabs.MDCTabs(document.querySelector('#dynamic-tabs'));
+        var dots = document.querySelector('.dots');
+        var panels = document.querySelector('.panels');
 
-        // dynamicTabs.preventDefaultOnClick = true;
-        // dynamicTabs.el_.addEventListener('MDCTabs:change', function ({detail: tabs}) {
-        //   var nthChildIndex = tabs.activeTabIndex + 1;
-        //   var activeDot = dots.querySelector('.dot.active');
-        //   if (activeDot) {
-        //     activeDot.classList.remove('active');
-        //   }
-        //   var newActiveDot = dots.querySelector('.dot:nth-child(' + nthChildIndex + ')');
-        //   if (newActiveDot) {
-        //     newActiveDot.classList.add('active');
-        //   }
+        dynamicTabs.preventDefaultOnClick = true;
+        dynamicTabs.root_.addEventListener('MDCTabs:change', function ({detail: tabs}) {
+          var nthChildIndex = tabs.activeTabIndex + 1;
+          var activeDot = dots.querySelector('.dot.active');
+          if (activeDot) {
+            activeDot.classList.remove('active');
+          }
+          var newActiveDot = dots.querySelector('.dot:nth-child(' + nthChildIndex + ')');
+          if (newActiveDot) {
+            newActiveDot.classList.add('active');
+          }
 
-        //   var activePanel = panels.querySelector('.panel.active');
-        //   if (activePanel) {
-        //     activePanel.classList.remove('active');
-        //   }
-        //   var newActivePanel = panels.querySelector('.panel:nth-child(' + nthChildIndex + ')');
-        //   if (newActivePanel) {
-        //     newActivePanel.classList.add('active');
-        //   }
-        // });
+          var activePanel = panels.querySelector('.panel.active');
+          if (activePanel) {
+            activePanel.classList.remove('active');
+          }
+          var newActivePanel = panels.querySelector('.panel:nth-child(' + nthChildIndex + ')');
+          if (newActivePanel) {
+            newActivePanel.classList.add('active');
+          }
+        });
 
-        // dots.addEventListener('click', function (evt) {
-        //   if (!evt.target.classList.contains('dot')) {
-        //     return;
-        //   }
-
-        //   evt.preventDefault();
-        //   var dotIndex = [].slice.call(dots.querySelectorAll('.dot')).indexOf(evt.target);
-        //   if (dotIndex >= 0) {
-        //     dynamicTabs.switchToTabAtIndex(dotIndex)
-        //   }
-        // })
+        dots.addEventListener('click', function (evt) {
+          if (!evt.target.classList.contains('dot')) {
+            return;
+          }
+          
+          evt.preventDefault();
+          var dotIndex = [].slice.call(dots.querySelectorAll('.dot')).indexOf(evt.target);
+          if (dotIndex >= 0) {
+            dynamicTabs.foundation_.switchToTabAtIndex(dotIndex)
+          }
+        })
       })();
     </script>
   </body>

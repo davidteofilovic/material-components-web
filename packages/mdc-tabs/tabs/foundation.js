@@ -39,12 +39,13 @@ export default class MDCTabsFoundation extends MDCFoundation {
       setStyleForIndicator: (/* propertyName: string, value: string */) => {},
       getOffsetWidthForIndicator: () => /* number */ 0,
       notifyChange: (/* evtData: {activeTabIndex: number} */) => {},
+      getActiveTab: () => /* Element */ {},
       getNumberOfTabs: () => /* number */ 0,
       isTabActiveAtIndex: (/* index: number */) => /* boolean */ false,
       setTabActiveAtIndex: (/* index: number, isActive: true */) => {},
       isDefaultPreventedOnClickForTabAtIndex: (/* index: number */) => /* boolean */ false,
       setPreventDefaultOnClickForTabAtIndex: (/* index: number, preventDefaultOnClick: boolean */) => {},
-      callMeasureSelfForTabAtIndex: (/* index: number */) => {},
+      measureTabAtIndex: (/* index: number */) => {},
       getComputedWidthForTabAtIndex: (/* index: number */) => /* number */ 0,
       getComputedLeftForTabAtIndex: (/* index: number */) => /* number */ 0,
       isRTL: () => /* boolean */ false,
@@ -54,10 +55,10 @@ export default class MDCTabsFoundation extends MDCFoundation {
   constructor(adapter = {}) {
     super(Object.assign(MDCTabsFoundation.defaultAdapter, adapter));
 
-    this.tabs_ = this.gatherTabs_();
     this.isIndicatorShown_ = false;
     this.computedWidth_ = 0;
-    this.activeTab_ = this.findActiveTab_();
+    this.computedLeft_ = 0;
+    this.activeTab_ = null;
     this.activeTabIndex_ = 0;
     this.layoutFrame_ = 0;
     this.resizeHandler_ = () => this.layout();
@@ -67,6 +68,7 @@ export default class MDCTabsFoundation extends MDCFoundation {
     this.adapter_.addClass(cssClasses.UPGRADED);
     this.adapter_.bindOnMDCTabSelectedEvent();
     this.adapter_.registerResizeHandler(this.resizeHandler_);
+    this.activeTab_ = this.adapter_.getActiveTab();
     this.layout();
   }
 
@@ -80,43 +82,34 @@ export default class MDCTabsFoundation extends MDCFoundation {
     if (this.layoutFrame_) {
       cancelAnimationFrame(this.layoutFrame_);
     }
+
     this.layoutFrame_ = requestAnimationFrame(() => {
       this.layoutInternal_();
       this.layoutFrame_ = 0;
     });
   }
-  
-  findActiveTab_() {
-    var activeTab;
-    for (let tab of this.tabs_) {
-      if (tab.isActive) {
-        activeTab = tab;
-        break;
-      }
-    }
-    if (!activeTab) {
-      activeTab = this.tabs_[0];
-    }
-    activeTab.isActive = true;
-    return activeTab;
-  }
 
   layoutInternal_() {
-    this.forEachTabIndex_((index) => this.adapter_.callMeasureSelfForTabAtIndex(index));
+    this.forEachTabIndex_((index) => this.adapter_.measureTabAtIndex(index));
     this.computedWidth_ = this.adapter_.getOffsetWidth();
     this.layoutIndicator_();
   }
 
   layoutIndicator_() {
     const isIndicatorFirstRender = !this.isIndicatorShown_;
+
     // Ensure that indicator appears in the right position immediately for correct first render.
     if (isIndicatorFirstRender) {
       this.adapter_.setStyleForIndicator('transition', 'none');
     }
 
-    const translateAmtForActiveTabLeft = this.activeTab.computedLeft;
-    const scaleAmtForActiveTabWidth = this.activeTab.computedWidth / this.computedWidth_;
-    const transformValue = `translateX(${translateAmtForActiveTabLeft}px) scale(${scaleAmtForActiveTabWidth})`;
+    console.log(this.adapter_.getComputedLeftForTabAtIndex(this.activeTabIndex_))
+    console.log(this.adapter_.getComputedWidthForTabAtIndex(this.activeTabIndex_) / this.adapter_.getOffsetWidth())
+    
+    const translateAmtForActiveTabLeft = this.adapter_.getComputedLeftForTabAtIndex(this.activeTabIndex_);
+    const scaleAmtForActiveTabWidth = this.adapter_.getComputedWidthForTabAtIndex(this.activeTabIndex_) / this.adapter_.getOffsetWidth();
+
+    const transformValue = `translateX(${translateAmtForActiveTabLeft}px) scale(${scaleAmtForActiveTabWidth}, 1)`;
     ['-webkit-transform', 'transform'].forEach((transformProperty) => {
       this.adapter_.setStyleForIndicator(transformProperty, transformValue);
     });
@@ -155,7 +148,7 @@ export default class MDCTabsFoundation extends MDCFoundation {
       this.adapter_.setTabActiveAtIndex(this.activeTabIndex_, false);
       this.layoutIndicator_();
       if (shouldNotify) {
-        this.notifyChange({activeTabIndex: this.activeTabIndex_});
+        this.adapter_.notifyChange({activeTabIndex: this.activeTabIndex_});
       }
     });
   }

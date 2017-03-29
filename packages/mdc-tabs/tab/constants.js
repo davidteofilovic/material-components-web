@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export const CssClasses = {
+export const cssClasses = {
   ACTIVE: 'mdc-tab--active',
 };

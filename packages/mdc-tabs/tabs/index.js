@@ -35,6 +35,7 @@ export class MDCTabs extends MDCComponent {
     if (this.activeTabIndex < 0) {
       return null;
     }
+
     return this.tabs[this.activeTabIndex];
   }
 
@@ -66,13 +67,13 @@ export class MDCTabs extends MDCComponent {
       this.setActiveTab_(tab, true);
     };
   }
-
+ 
   getDefaultFoundation() {
     return new MDCTabsFoundation({
       addClass: (className) => this.root_.classList.add(className),
       removeClass: (className) => this.root_.classList.remove(className),
-      // bindOnMDCTabSelectedEvent: () => this.on('MDCTab:selected', this.tabSelectedHandler_),
-      // unbindOnMDCTabSelectedEvent: () => this.off('MDCTab:selected', this.tabSelectedHandler_),
+      bindOnMDCTabSelectedEvent: () => this.root_.addEventListener('MDCTab:selected', this.tabSelectedHandler_, true),
+      unbindOnMDCTabSelectedEvent: () => this.root_.removeEventListener('MDCTab:selected', this.tabSelectedHandler_, true),
       registerResizeHandler: (handler) => window.addEventListener('resize', handler),
       deregisterResizeHandler: (handler) => window.removeEventListener('resize', handler),
       getOffsetWidth: () => this.root_.offsetWidth,
@@ -80,17 +81,18 @@ export class MDCTabs extends MDCComponent {
       getOffsetWidthForIndicator: () => this.indicator_.offsetWidth,
       notifyChange: (evtData) => this.emit('MDCTabs:change', evtData),
       getNumberOfTabs: () => this.tabs.length,
+			getActiveTab: () => this.activeTab,
       isTabActiveAtIndex: (index) => this.tabs[index].isActive,
       setTabActiveAtIndex: (index, isActive) => this.tabs[index].isActive = isActive,
       isDefaultPreventedOnClickForTabAtIndex: (index) => this.tabs[index].preventDefaultOnClick,
       setPreventDefaultOnClickForTabAtIndex: (index, preventDefaultOnClick) => {
         this.tabs[index].preventDefaultOnClick = preventDefaultOnClick;
       },
-      callMeasureSelfForTabAtIndex: (index) => this.measureSelf_(this.tabs[index]),
-      getComputedWidthForTabAtIndex: (index) => this.tabs[index].computedWidth,
-      getComputedLeftForTabAtIndex: (index) => this.tabs[index].computedLeft,
+      measureTabAtIndex: (index) => this.measureSelf_(this.tabs[index]),
+      getComputedWidthForTabAtIndex: (index) => this.tabs[index].computedWidth_,
+      getComputedLeftForTabAtIndex: (index) => this.tabs[index].computedLeft_,
       isRTL: () => getComputedStyle(this.root_).direction === 'rtl',
-		});
+    });
   }
 
   initialSyncWithDOM() {
@@ -122,8 +124,8 @@ export class MDCTabs extends MDCComponent {
     this.activeTabIndex = activeTabIndex;
   }
 
-  measureSelf_() {
-    this.computedWidth_ = this.root_.offsetWidth;
-    this.computedLeft_ = this.root_.offsetLeft;
+  measureSelf_(tab) {
+    tab.computedWidth_ = tab.root_.offsetWidth;
+    tab.computedLeft_ = tab.root_.offsetLeft;
   }
 }

@@ -58,7 +58,9 @@ $_md-tabs-scroller-indicator-width: 48px;
 }
 
 .mdc-tabs {
-  display: table;
+  display: flex;
+	justify-content: center;
+	flex-direction: row;
   height: 48px;
   margin: 0 auto;
   position: relative;
@@ -103,6 +105,10 @@ $_md-tabs-scroller-indicator-width: 48px;
       background-color: white;
     }    
   }
+
+	@include mdc-rtl('.mdc-tabs') {
+		flex-direction: reverse-row;
+	}
 }
 
 .mdc-tabs--icons-with-text {
