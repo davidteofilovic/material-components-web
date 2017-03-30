@@ -34,6 +34,17 @@ https://www.apache.org/licenses/LICENSE-2.0
       .mdc-theme--dark {
         background-color: #303030;
       }
+ 
+      #dynamic-demo-toolbar h1 {
+        margin-left: 64px;
+
+      }
+
+      #dynamic-demo-toolbar .mdc-tabs {
+        position: absolute;
+        bottom: 0;
+        margin-left: 20px;
+      }
     </style>
   </head>
   <body class="mdc-typography"> 
@@ -318,7 +329,7 @@ https://www.apache.org/licenses/LICENSE-2.0
         <h2>Within Toolbar, Dynamic Content Control</h2>
         <em>This uses custom CSS to line up the title and tabs. 
             Should it be rolled into toolbar/tabs/both?</em>
-        <div class="mdc-toolbar FUTURE-mdc-toolbar" id="dynamic-demo-toolbar">
+        <div class="mdc-toolbar" id="dynamic-demo-toolbar">
           <div class="mdc-toolbar__row">
             <div class="mdc-toolbar__section mdc-toolbar__section--align-start">
               <h2 class="mdc-typography--display2">My App</h2>
@@ -358,8 +369,8 @@ https://www.apache.org/licenses/LICENSE-2.0
     <script>
       (function() {
         window.basicTabs = new mdc.tabs.MDCTabs(document.querySelector('#basic-tabs'));
-        // window.scrollableTabs = new mdc.tabs.MDCTabs(document.querySelector('#scrollable-tabs'));
-        // window.tabsScroller = new mdc.tabs.MDCTabsScroller(document.querySelector('#tabs-scroller', window.scrollableTabs));
+        window.scrollableTabs = new mdc.tabs.MDCTabs(document.querySelector('#scrollable-tabs'));
+        window.tabsScroller = new mdc.tabs.MDCTabsScroller(document.querySelector('#tabs-scroller', window.scrollableTabs));
         window.iconTabs = new mdc.tabs.MDCTabs(document.querySelector('#icon-tabs'));
         window.iconTextTabs = new mdc.tabs.MDCTabs(document.querySelector('#icon-text-tabs'));
         window.toolbarTabs = new mdc.tabs.MDCTabs(document.querySelector('#toolbar-tabs'));

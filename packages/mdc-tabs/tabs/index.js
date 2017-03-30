@@ -81,7 +81,7 @@ export class MDCTabs extends MDCComponent {
       getOffsetWidthForIndicator: () => this.indicator_.offsetWidth,
       notifyChange: (evtData) => this.emit('MDCTabs:change', evtData),
       getNumberOfTabs: () => this.tabs.length,
-			getActiveTab: () => this.activeTab,
+      getActiveTab: () => this.activeTab,
       isTabActiveAtIndex: (index) => this.tabs[index].isActive,
       setTabActiveAtIndex: (index, isActive) => this.tabs[index].isActive = isActive,
       isDefaultPreventedOnClickForTabAtIndex: (index) => this.tabs[index].preventDefaultOnClick,

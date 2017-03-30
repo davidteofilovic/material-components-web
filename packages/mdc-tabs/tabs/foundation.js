@@ -52,7 +52,7 @@ export default class MDCTabsFoundation extends MDCFoundation {
     };
   }
 
-  constructor(adapter = {}) {
+  constructor(adapter) {
     super(Object.assign(MDCTabsFoundation.defaultAdapter, adapter));
 
     this.isIndicatorShown_ = false;
@@ -96,7 +96,6 @@ export default class MDCTabsFoundation extends MDCFoundation {
   }
 
   layoutIndicator_() {
-    console.log(this.adapter_.getComputedLeftForTabAtIndex(this.activeTabIndex_))
     const isIndicatorFirstRender = !this.isIndicatorShown_;
 
     // Ensure that indicator appears in the right position immediately for correct first render.
@@ -117,6 +116,7 @@ export default class MDCTabsFoundation extends MDCFoundation {
       this.adapter_.getOffsetWidthForIndicator();
       this.adapter_.setStyleForIndicator('transition', '');
       this.adapter_.setStyleForIndicator('visibility', 'visible');
+      this.layout();
       this.isIndicatorShown_ = true;
     }
   }

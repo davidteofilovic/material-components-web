@@ -293,49 +293,6 @@ $_md-tabs-scroller-indicator-width: 48px;
   }
 }
 
-.mdc-tabs-scroller--focused-child {
-  // .mdc-tabs-scroller__indicator {
-  //   visibility: hidden !important;
-  // }
-}
-
-// ---
-// FUTURE CHANGES to MDC Toolbar that are needed for 
-// tabs
-
-.FUTURE-mdc-toolbar {
-  flex-direction: column;
-  height: auto;
-  
-  .mdc-toolbar__row {
-    display: flex;
-    width: 100%;
-    height: 64px;
-  }
-}
-
-// ---
-// Dynamic Tabs Demo Control
-
-#dynamic-demo-toolbar {
-  h1 {
-    margin-left: 64px;
-    
-    @media (max-width: 600px) {
-      margin-left: 32px;
-    }
-  }
-  
-  .mdc-tabs {
-    position: absolute;
-    bottom: 0;
-    margin-left: 20px;
-  }
-}
-
-// ---
-// Demo CSS
-
 section + section {
   margin-top: 40px;
 }

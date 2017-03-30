@@ -28,6 +28,10 @@ import MDCTabsScrollerFoundation from './foundation';
 export {MDCTabsScrollerFoundation};
 
 export class MDCTabsScroller extends MDCComponent {
+  static attachTo(root) {
+    return new MDCTabsScroller(root);
+  }
+
   static get cssClasses() {
     return {
       VISIBLE: 'mdc-tabs-scroller--visible',
@@ -43,56 +47,56 @@ export class MDCTabsScroller extends MDCComponent {
       INDICATOR_RIGHT_SELECTOR: '.mdc-tabs-scroller__indicator--right',
     }
   }
-  
-  constructor(el, tabs) {
-    super();
-    this.el_ = el;
-    this.tabs_ = tabs;
-    this.tabsWrapper_ = this.el_.querySelector(MDCTabsScroller.strings.WRAPPER_SELECTOR);
-    this.leftIndicator_ = this.el_.querySelector(MDCTabsScroller.strings.INDICATOR_LEFT_SELECTOR);
-    this.rightIndicator_ = this.el_.querySelector(MDCTabsScroller.strings.INDICATOR_RIGHT_SELECTOR);
-    this.pointerDownRecognized_ = false;
-    this.computedWrapperWidth_ = 0;
-    this.computedWidth_ = 0;
-    this.currentTranslateOffset_ = 0;
-    this.bindEvents_();
-    requestAnimationFrame(() => this.layout());
-  }
-
-  getDefaultFoundation() {
-    return new MDCTabsScrollerFoundation({
-			addClass: (/* className: string */) => {},
-      removeClass: (/* className: string */) => {},
-      hasClass: (/* className: string */) => {},
-      registerInteractionHandler: (/* type: string, handler: EventListener, useCapture: boolean */) => {},
-      deregisterInteractionHandler: (/* type: string, handler: EventListener */) => {},
-      registerResizeHandler: (/* handler: EventListener */) => {},
-      deregisterResizeHandler: (/* handler: EventListener */) => {},
-      eventTargetHasClass: (/* target: EventTarget, className: string */) => /* boolean */ false,
-      isEventTargetAncestorOfForwardIndicator: (/* target: EventTarget */) => /* boolean */ false,
-      isEventTargetAncestorOfBackIndicator: (/* target: EventTarget */) => /* boolean */ false,
-      addClassToBackIndicator: (/* className: string */) => {},
-      removeClassFromBackIndicator: (/* className: string */) => {},
-      backIndicatorHasClass: (/* className: string */) => {},
-      addClassToForwardIndicator: (/* className: string */) => {},
-      removeClassFromForwardIndicator: (/* className: string */) => {},
-      forwardIndicatorHasClass: (/* className: string */) => {},
-      layoutTabs: () => {},
-      getOffsetWidth: () => /* number */ 0,
-      getBackIndicatorOffsetWidth: () => /* number */ 0,
-      getForwardIndicatorOffsetWidth: () => /* number */ 0,
-      getNumberOfTabs: () => /* number */ 0,
-      getOffsetLeftForTabAtIndex: (/* index: number */) => /* number */ 0,
-      getOffsetWidthForTabAtIndex: (/* index: number */) => /* number */ 0,
-      setStyleForWrapperElement: (/* propertyName: string, value: string */) => {},
-      isRTL: () => /* boolean */ false,
-		});
-  }
 
   get tabs() {
     return this.tabs_;
   }
   
+  // constructor(tabs) {
+  //   super();
+  //   this.tabs_ = tabs;
+  //   this.tabsWrapper_ = this.el_.querySelector(MDCTabsScroller.strings.WRAPPER_SELECTOR);
+  //   this.leftIndicator_ = this.el_.querySelector(MDCTabsScroller.strings.INDICATOR_LEFT_SELECTOR);
+  //   this.rightIndicator_ = this.el_.querySelector(MDCTabsScroller.strings.INDICATOR_RIGHT_SELECTOR);
+  //   this.pointerDownRecognized_ = false;
+  //   this.computedWrapperWidth_ = 0;
+  //   this.computedWidth_ = 0;
+  //   this.currentTranslateOffset_ = 0;
+  //   this.bindEvents_();
+  //   requestAnimationFrame(() => this.layout());
+  // }
+
+  getDefaultFoundation() {
+    return new MDCTabsScrollerFoundation({});
+    // return new MDCTabsScrollerFoundation({
+		// 	addClass: (/* className: string */) => {},
+    //   removeClass: (/* className: string */) => {},
+    //   hasClass: (/* className: string */) => {},
+    //   registerInteractionHandler: (/* type: string, handler: EventListener, useCapture: boolean */) => {},
+    //   deregisterInteractionHandler: (/* type: string, handler: EventListener */) => {},
+    //   registerResizeHandler: (/* handler: EventListener */) => {},
+    //   deregisterResizeHandler: (/* handler: EventListener */) => {},
+    //   eventTargetHasClass: (/* target: EventTarget, className: string */) => /* boolean */ false,
+    //   isEventTargetAncestorOfForwardIndicator: (/* target: EventTarget */) => /* boolean */ false,
+    //   isEventTargetAncestorOfBackIndicator: (/* target: EventTarget */) => /* boolean */ false,
+    //   addClassToBackIndicator: (/* className: string */) => {},
+    //   removeClassFromBackIndicator: (/* className: string */) => {},
+    //   backIndicatorHasClass: (/* className: string */) => {},
+    //   addClassToForwardIndicator: (/* className: string */) => {},
+    //   removeClassFromForwardIndicator: (/* className: string */) => {},
+    //   forwardIndicatorHasClass: (/* className: string */) => {},
+    //   getOffsetWidth: () => /* number */ 0,
+    //   getBackIndicatorOffsetWidth: () => /* number */ 0,
+    //   getForwardIndicatorOffsetWidth: () => /* number */ 0,
+    //   getNumberOfTabs: () => /* number */ 0,
+    //   getOffsetLeftForTabAtIndex: (/* index: number */) => /* number */ 0,
+    //   getOffsetWidthForTabAtIndex: (/* index: number */) => /* number */ 0,
+    //   setStyleForWrapperElement: (/* propertyName: string, value: string */) => {},
+    //   isRTL: () => /* boolean */ false,
+		// });
+  }
+
+ 
   bindEvents_() {
     ['touchstart', 'mousedown'].forEach((evtType) => {
       this.el_.addEventListener(evtType, () => {
