@@ -91,7 +91,6 @@ export class MDCTabs extends MDCComponent {
       measureTabAtIndex: (index) => this.measureSelf_(this.tabs[index]),
       getComputedWidthForTabAtIndex: (index) => this.tabs[index].computedWidth_,
       getComputedLeftForTabAtIndex: (index) => this.tabs[index].computedLeft_,
-      isRTL: () => getComputedStyle(this.root_).direction === 'rtl',
     });
   }
 

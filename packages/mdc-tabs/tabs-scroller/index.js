@@ -52,22 +52,28 @@ export class MDCTabsScroller extends MDCComponent {
     return this.tabs_;
   }
   
-  // constructor(tabs) {
-  //   super();
-  //   this.tabs_ = tabs;
-  //   this.tabsWrapper_ = this.el_.querySelector(MDCTabsScroller.strings.WRAPPER_SELECTOR);
-  //   this.leftIndicator_ = this.el_.querySelector(MDCTabsScroller.strings.INDICATOR_LEFT_SELECTOR);
-  //   this.rightIndicator_ = this.el_.querySelector(MDCTabsScroller.strings.INDICATOR_RIGHT_SELECTOR);
-  //   this.pointerDownRecognized_ = false;
-  //   this.computedWrapperWidth_ = 0;
-  //   this.computedWidth_ = 0;
-  //   this.currentTranslateOffset_ = 0;
-  //   this.bindEvents_();
-  //   requestAnimationFrame(() => this.layout());
-  // }
+  constructor(tabs) {
+    super();
+    this.tabs_ = tabs;
+    this.tabsWrapper_ = this.tabs_.querySelector(MDCTabsScroller.strings.WRAPPER_SELECTOR);
+    this.leftIndicator_ = this.tabs_.querySelector(MDCTabsScroller.strings.INDICATOR_LEFT_SELECTOR);
+    this.rightIndicator_ = this.tabs_.querySelector(MDCTabsScroller.strings.INDICATOR_RIGHT_SELECTOR);
+    // this.pointerDownRecognized_ = false;
+    // this.computedWrapperWidth_ = 0;
+    // this.computedWidth_ = 0;
+    // this.currentTranslateOffset_ = 0;
+    // this.bindEvents_();
+    // requestAnimationFrame(() => this.layout());
+  }
 
   getDefaultFoundation() {
-    return new MDCTabsScrollerFoundation({});
+    return new MDCTabsScrollerFoundation({
+      isRTL: () => getComputedStyle(this.root_).getPropertyValue('direction') === 'rtl',
+      registerBackIndicatorInteractionHandler: (handler) => this.leftIndicator_.addEventListener('click', handler),
+      deregisterBackIndicatorInteractionHandler: (handler) => this.leftIndicator_.removeEventListener('click', handler),
+      registerForwardIndicatorInteractionHandler: (handler) => this.rightIndicator_.addEventListener('click', handler),
+      deregisterForwardIndicatorInteractionHandler: (handler) => this.rightIndicator_.removeEventListener('click', handler),
+    });
     // return new MDCTabsScrollerFoundation({
 		// 	addClass: (/* className: string */) => {},
     //   removeClass: (/* className: string */) => {},

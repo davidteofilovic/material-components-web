@@ -48,7 +48,6 @@ export default class MDCTabsFoundation extends MDCFoundation {
       measureTabAtIndex: (/* index: number */) => {},
       getComputedWidthForTabAtIndex: (/* index: number */) => /* number */ 0,
       getComputedLeftForTabAtIndex: (/* index: number */) => /* number */ 0,
-      isRTL: () => /* boolean */ false,
     };
   }
 

@@ -30,15 +30,16 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
 
   static get defaultAdapter() {
     return {
-      isRTL: () => {},
-      registerForwardIndicatorInteractionHandler: () => {},
-      registerBackIndicatorInteractionHandler: () => {},
+      isRTL: () => /* boolean */ false,
+      registerLeftIndicatorInteractionHandler: (/* handler: EventListener */) => {},
+      deregisterLeftIndicatorInteractionHandler: (/* handler: EventListener */) => {},
+      registerRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
+      deregisterRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
     }
     //return {
     //  addClass: (/* className: string */) => {},
     //  removeClass: (/* className: string */) => {},
-    //  hasClass: (/* className: string */) => {},
-    //  registerInteractionHandler: (/* type: string, handler: EventListener, useCapture: boolean */) => {},
+    //  hasClass: (/* className: string */) => {}, //  registerInteractionHandler: (/* type: string, handler: EventListener, useCapture: boolean */) => {},
     //  deregisterInteractionHandler: (/* type: string, handler: EventListener */) => {},
     //  registerResizeHandler: (/* handler: EventListener */) => {},
     //  deregisterResizeHandler: (/* handler: EventListener */) => {},
@@ -65,6 +66,8 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   constructor(adapter) {
     super(Object.assign(MDCTabsScrollerFoundation.defaultAdapter, adapter));
 
+    this.rightIndicatorClickHandler = () => this.scrollRight();
+    this.leftIndicatorClickHandler = () => this.scrollLeft();
     // this.computedWrapperWidth_ = 0;
     // this.layoutFrame_ = 0;
     // this.pointerDownRecognized_ = false;
@@ -78,6 +81,8 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   }
 
   init() {
+    this.adapter_.registerLeftIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
+    // this.adapter_.registerRightIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
     // this.pointerRecognitionEvents_.forEach((evtType) => {
     //   this.adapter_.registerInteractionHandler(evtType, this.pointerRecognitionHandler_, true);
     // });
@@ -86,49 +91,58 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   }
 
   destroy() {
-    this.pointerRecognitionEvents_.forEach((evtType) => {
-      this.adapter_.deregisterInteractionHandler(evtType, this.pointerRecognitionHandler_);
-    });
-    this.adapter_.deregisterInteractionHandler('focus', this.focusHandler_);
-    this.adapter_.deregisterInteractionHandler('click', this.clickHandler_);
+    this.adapter_.deregisterLeftIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
+    this.adapter_.deregisterRightIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
+    // this.pointerRecognitionEvents_.forEach((evtType) => {
+    //   this.adapter_.deregisterInteractionHandler(evtType, this.pointerRecognitionHandler_);
+    // });
+    // this.adapter_.deregisterInteractionHandler('focus', this.focusHandler_);
+    // this.adapter_.deregisterInteractionHandler('click', this.clickHandler_);
   }
 
   scrollForward() {
-    this.adapter_.isRTL() ? this.adapter_.scrollLeft() : this.adapter_.scrollRight;
+    console.log("forward");
+    // this.adapter_.isRTL() ? this.adapter_.scrollLeft() : this.adapter_.scrollRight;
   }
 
   scrollBack() {
-    this.adapter_.isRTL() ? this.adapter_.scrollRight() : this.adapter_.scrollLeft;
+    console.log("back");
+    // this.adapter_.isRTL() ? this.adapter_.scrollRight() : this.adapter_.scrollLeft;
   }
 
-  handleFocus_(evt) {
-    // TODO
+  scrollToTab(tab) {
+    this.currentTranslateOffset_ = tab.computedLeft;
+    requestAnimationFrame(() => this.shiftWrapper_());
   }
+ 
+//  handleFocus_(evt) {
+//    // TODO
+//  }
+//
+//  handleBlur_(evt) {
+//    // TODO
+//  }
 
-  handleBlur_(evt) {
-    // TODO
-  }
-
-  handlePossibleIndicatorClick_(evt) {
-    const {
-      INDICATOR_FORWARD,
-      INDICATOR_BACK,
-      INDICATOR_DISABLED,
-    } = cssClasses;
-    const {target} = evt;
-    const shouldScrollForward = (
-      this.adapter_.eventTargetHasClass(target, INDICATOR_FORWARD) &&
-      !this.adapter_.eventTargetHasClass(target, INDICATOR_DISABLED)
-    );
-    const shouldScrollBack = (
-      this.adapter_.eventTargetHasClass(target, INDICATOR_BACK) &&
-      !this.adapter_.eventTargetHasClass(target, INDICATOR_DISABLED)
-    );
-
-    if (shouldScrollForward) {
-      this.scrollForward();
-    } else if (shouldScrollBack) {
-      this.scrollBack();
-    }
-  }
+//  handlePossibleIndicatorClick_(evt) {
+//    const {
+//      INDICATOR_FORWARD,
+//      INDICATOR_BACK,
+//      INDICATOR_DISABLED,
+//    } = cssClasses;
+//    const {target} = evt;
+//    const shouldScrollForward = (
+//      this.adapter_.eventTargetHasClass(target, INDICATOR_FORWARD) &&
+//      !this.adapter_.eventTargetHasClass(target, INDICATOR_DISABLED)
+//    );
+//    const shouldScrollBack = (
+//      this.adapter_.eventTargetHasClass(target, INDICATOR_BACK) &&
+//      !this.adapter_.eventTargetHasClass(target, INDICATOR_DISABLED)
+//    );
+// 
+//    if (shouldScrollForward) {
+//      this.scrollForward();
+//    } else if (shouldScrollBack) {
+//      this.scrollBack();
+//    }
+//  }
 }

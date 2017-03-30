@@ -225,24 +225,25 @@ $_md-tabs-scroller-indicator-width: 48px;
 }
 
 .mdc-tabs-scroller {
+  display: flex;
   box-sizing: border-box;
-  position: relative;
   width: 100%;
   overflow: hidden;
   background-color: inherit;
 
-  &__tabs-wrapper {
-    display: table;
-    margin: 0 auto;
-    z-index: 0;  
-    transition: transform 240ms cubic-bezier(.4, 0, .2, 1);
-    will-change: transform;
+  &__scroll-frame {
+    flex: 1;
+    z-index: 0;
+    overflow: hidden;
+
+    &__tabs {
+      transition: transform 240ms cubic-bezier(.4, 0, .2, 1);
+      will-change: transform;
+    }
   }
 
   &__indicator {
     @include anchor-reset;
-    position: absolute;
-    top: 0;
 
     display: flex;
     align-items: center;

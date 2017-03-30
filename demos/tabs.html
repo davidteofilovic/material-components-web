@@ -78,8 +78,13 @@ https://www.apache.org/licenses/LICENSE-2.0
 			<section>
 			  <h2>Scrollable tabs</h2>
 			  <div id="tabs-scroller" class="mdc-tabs-scroller" data-md-autoinit>
-			    <div class="mdc-tabs-scroller__tabs-wrapper">
-			      <nav id="scrollable-tabs" class="mdc-tabs">
+			    <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--left">
+			      <a class="mdc-tabs-scroller__indicator__inner material-icons" href="#">
+			        keyboard_arrow_left
+			      </a>
+			    </div>
+			    <div class="mdc-tabs-scroller__scroll-frame">
+			      <nav id="scrollable-tabs" class="mdc-tabs mdc-tabs-scroller__scroll-frame__tabs">
 			        <a class="mdc-tab mdc-tab--active" href="#one">Item One</a>
 			        <a class="mdc-tab" href="#two">New Arrivals in Item Two</a>
 			        <a class="mdc-tab" href="#three">Item Three</a>
@@ -98,11 +103,6 @@ https://www.apache.org/licenses/LICENSE-2.0
 			        <a class="mdc-tab" href="#eight">Item Eight</a>
 			        <span class="mdc-tabs__indicator"></span>
 			      </nav>
-			    </div>
-			    <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--left">
-			      <a class="mdc-tabs-scroller__indicator__inner material-icons" href="#">
-			        keyboard_arrow_left
-			      </a>
 			    </div>
 			    <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--right">
 			      <a class="mdc-tabs-scroller__indicator__inner material-icons" href="#">
