@@ -96,16 +96,14 @@ export default class MDCTabsFoundation extends MDCFoundation {
   }
 
   layoutIndicator_() {
+    console.log(this.adapter_.getComputedLeftForTabAtIndex(this.activeTabIndex_))
     const isIndicatorFirstRender = !this.isIndicatorShown_;
 
     // Ensure that indicator appears in the right position immediately for correct first render.
     if (isIndicatorFirstRender) {
       this.adapter_.setStyleForIndicator('transition', 'none');
     }
-
-    console.log(this.adapter_.getComputedLeftForTabAtIndex(this.activeTabIndex_))
-    console.log(this.adapter_.getComputedWidthForTabAtIndex(this.activeTabIndex_) / this.adapter_.getOffsetWidth())
-    
+   
     const translateAmtForActiveTabLeft = this.adapter_.getComputedLeftForTabAtIndex(this.activeTabIndex_);
     const scaleAmtForActiveTabWidth = this.adapter_.getComputedWidthForTabAtIndex(this.activeTabIndex_) / this.adapter_.getOffsetWidth();
 
