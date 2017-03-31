@@ -35,6 +35,8 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
       deregisterLeftIndicatorInteractionHandler: (/* handler: EventListener */) => {},
       registerRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
       deregisterRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
+      scrollLeft: () => {},
+      scrollRight: () => {},
     }
     //return {
     //  addClass: (/* className: string */) => {},
@@ -59,7 +61,6 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
     //  getOffsetLeftForTabAtIndex: (/* index: number */) => /* number */ 0,
     //  getOffsetWidthForTabAtIndex: (/* index: number */) => /* number */ 0,
     //  setStyleForWrapperElement: (/* propertyName: string, value: string */) => {},
-    //  isRTL: () => /* boolean */ false,
     //};
   }
 
@@ -81,8 +82,8 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   }
 
   init() {
-    this.adapter_.registerLeftIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
-    // this.adapter_.registerRightIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
+    this.adapter_.registerLeftIndicatorInteractionHandler(this.leftIndicatorClickHandler);
+    this.adapter_.registerRightIndicatorInteractionHandler(this.rightIndicatorClickHandler);
     // this.pointerRecognitionEvents_.forEach((evtType) => {
     //   this.adapter_.registerInteractionHandler(evtType, this.pointerRecognitionHandler_, true);
     // });
@@ -91,8 +92,8 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   }
 
   destroy() {
-    this.adapter_.deregisterLeftIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
-    this.adapter_.deregisterRightIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
+    this.adapter_.deregisterLeftIndicatorInteractionHandler(this.leftIndicatorClickHandler);
+    this.adapter_.deregisterRightIndicatorInteractionHandler(this.rightIndicatorClickHandler);
     // this.pointerRecognitionEvents_.forEach((evtType) => {
     //   this.adapter_.deregisterInteractionHandler(evtType, this.pointerRecognitionHandler_);
     // });
@@ -100,21 +101,19 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
     // this.adapter_.deregisterInteractionHandler('click', this.clickHandler_);
   }
 
-  scrollForward() {
-    console.log("forward");
-    // this.adapter_.isRTL() ? this.adapter_.scrollLeft() : this.adapter_.scrollRight;
+  scrollRight() {
+    this.adapter_.isRTL() ? this.adapter_.scrollLeft() : this.adapter_.scrollRight();
   }
 
-  scrollBack() {
-    console.log("back");
-    // this.adapter_.isRTL() ? this.adapter_.scrollRight() : this.adapter_.scrollLeft;
+  scrollLeft() {
+    this.adapter_.isRTL() ? this.adapter_.scrollRight() : this.adapter_.scrollLeft();
   }
 
   scrollToTab(tab) {
     this.currentTranslateOffset_ = tab.computedLeft;
-    requestAnimationFrame(() => this.shiftWrapper_());
+    requestAnimationFrame(() => this.shiftFrame_());
   }
- 
+
 //  handleFocus_(evt) {
 //    // TODO
 //  }
@@ -138,7 +137,7 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
 //      this.adapter_.eventTargetHasClass(target, INDICATOR_BACK) &&
 //      !this.adapter_.eventTargetHasClass(target, INDICATOR_DISABLED)
 //    );
-// 
+//
 //    if (shouldScrollForward) {
 //      this.scrollForward();
 //    } else if (shouldScrollBack) {

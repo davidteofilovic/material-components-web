@@ -19,7 +19,7 @@
 @import "@material/theme/mixins";
 @import "@material/rtl/mixins";
 
-// postcss-bem-linter: define tabs 
+// postcss-bem-linter: define tabs
 // TODO: Focus outline colors for css-only/dark theme toolbar tabs
 
 $md-tabs-text-color: rgba(black, .54);
@@ -80,30 +80,30 @@ $_md-tabs-scroller-indicator-width: 48px;
     // e.g. server-side-rendered active tab.
     visibility: hidden;
   }
-  
+
   // NOTE: All of these treatments for inside of toolbar should be refactored to use mdc-theme!
   .mdc-toolbar & {
     margin: 0;
     .mdc-tab {
       // text-secondary-on-primary
       color: rgba(white, .7);
-      
+
       &--active,
       &:hover {
         // text-primary-on-primary
         color: white;
       }
-      
+
       &::before,
       &::after {
         background-color: rgba(white, .06);
       }
     }
-    
-    
+
+
     .mdc-tabs__indicator {
       background-color: white;
-    }    
+    }
   }
 
 	@include mdc-rtl('.mdc-tabs') {
@@ -121,8 +121,8 @@ $_md-tabs-scroller-indicator-width: 48px;
   .mdc-tabs__indicator {
     background-color: var(--mdc-theme-primary);
   }
-  
-  // NOTE: mdc-tabs needed for specifity. 
+
+  // NOTE: mdc-tabs needed for specifity.
   &.mdc-tabs:not(.mdc-tabs-upgraded) .mdc-tab::after {
     background-color: var(--mdc-theme-primary);
   }
@@ -133,8 +133,8 @@ $_md-tabs-scroller-indicator-width: 48px;
   .mdc-tabs__indicator {
     background-color: var(--mdc-theme-accent);
   }
-  
-  // NOTE: mdc-tabs needed for specifity. 
+
+  // NOTE: mdc-tabs needed for specifity.
   &.mdc-tabs:not(.mdc-tabs-upgraded) .mdc-tab::after {
     background-color: var(--mdc-theme-accent);
   }
@@ -194,7 +194,7 @@ $_md-tabs-scroller-indicator-width: 48px;
     display: none;
     pointer-events: none;
     background-color: black;
-    
+
     // TODO: Use theme colors!
     .mdc-toolbar & {
       background-color: white;
@@ -208,11 +208,11 @@ $_md-tabs-scroller-indicator-width: 48px;
       display: initial;
     }
   }
-  
+
   &:not(.mdc-tab--active):hover::after {
     opacity: .38;
   }
-  
+
   // NOT WORKING, FIX
   &--active,
   &:not(.mdc-tab--active):active::after {
@@ -232,8 +232,10 @@ $_md-tabs-scroller-indicator-width: 48px;
   background-color: inherit;
 
   &__scroll-frame {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
     flex: 1;
-    z-index: 0;
     overflow: hidden;
 
     &__tabs {
@@ -251,32 +253,24 @@ $_md-tabs-scroller-indicator-width: 48px;
 
     width: $_md-tabs-scroller-indicator-width;
     height: 100%;
-  
+
     // NOTE: should correspond with theme
     background-color: white;
-    visibility: hidden;
-    z-index: -1;
 
     @include anchor-reset;
     &__inner {
       text-decoration: inherit;
       cursor: inherit;
       color: inherit;
+
       &:hover {
         color: inherit;
       }
+
       &:focus {
         outline-color: inherit;
       }
     }
-  }
-
-  &__indicator--left {
-    left: 0;
-  }
-
-  &__indicator--right {
-    right: 0;
   }
 
   &__indicator--disabled {
@@ -288,10 +282,10 @@ $_md-tabs-scroller-indicator-width: 48px;
 .mdc-tabs-scroller--visible {
   padding: 0 $_md-tabs-scroller-indicator-width;
 
-  .mdc-tabs-scroller__indicator {
-    visibility: visible;
-    z-index: 1;
-  }
+  // .mdc-tabs-scroller__indicator {
+  //   visibility: visible;
+  //   z-index: 1;
+  // }
 }
 
 section + section {

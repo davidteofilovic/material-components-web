@@ -17,13 +17,14 @@
 export const cssClasses = {
   VISIBLE: 'mdc-tabs-scroller--visible',
   FOCUSED_CHILD: 'mdc-tabs-scroller--focused-child',
-  INDICATOR_FORWARD: 'mdc-tabs-scroller__indicator--forward',
-  INDICATOR_BACK: 'mdc-tabs-scroller__indicator--back',
+  INDICATOR_RIGHT: 'mdc-tabs-scroller__indicator--right',
+  INDICATOR_LEFT: 'mdc-tabs-scroller__indicator--left',
   INDICATOR_DISABLED: 'mdc-tabs-scroller__indicator--disabled',
 };
 
 export const strings = {
-  WRAPPER_SELECTOR: '.mdc-tabs-scroller__tabs-wrapper',
-  INDICATOR_FORWARD_SELECTOR: '.mdc-tabs-scroller__indicator--forward',
-  INDICATOR_BACK_SELECTOR: '.mdc-tabs-scroller__indicator--back',
+  FRAME_SELECTOR: '.mdc-tabs-scroller__scroll-frame',
+  FRAME_TABS_SELECTOR: '.mdc-tabs-scroller__scroll-frame__tabs',
+  INDICATOR_RIGHT_SELECTOR: '.mdc-tabs-scroller__indicator--right',
+  INDICATOR_LEFT_SELECTOR: '.mdc-tabs-scroller__indicator--left',
 };

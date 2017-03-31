@@ -23,7 +23,8 @@ export default class MDCDialogFoundation extends MDCFoundation {
   }
 
   static get strings() {
-    return strings; }
+    return strings;
+  }
 
   static get defaultAdapter() {
     return {
