@@ -32,57 +32,34 @@ export class MDCTabsScroller extends MDCComponent {
     return new MDCTabsScroller(root);
   }
 
+  get tabs() {
+    return this.root_.tabs;
+  }
+
   initialize() {
-    this.scrollFrame_ = this.root_.querySelector(MDCTabsScrollerFoundation.strings.FRAME_SELECTOR);
-    this.frameTabs_ = this.root_.querySelector(MDCTabsScrollerFoundation.strings.FRAME_TABS_SELECTOR);
-    this.leftIndicator_ = this.root_.querySelector(MDCTabsScrollerFoundation.strings.INDICATOR_LEFT_SELECTOR);
-    this.rightIndicator_ = this.root_.querySelector(MDCTabsScrollerFoundation.strings.INDICATOR_RIGHT_SELECTOR);
+    this.mdcTabsInstance_ = this.root_;
+    this.tabsWrapper_ = this.mdcTabsInstance_.root_;
+    this.scrollFrame_ = this.tabsWrapper_.parentElement;
+    this.shiftLeftTarget_ = this.scrollFrame_.previousElementSibling;
+    this.shiftRightTarget_ = this.scrollFrame_.nextElementSibling;
+    this.currentTranslateOffset_ = 0;
     // this.pointerDownRecognized_ = false;
-    // this.computedWrapperWidth_ = 0;
-    // this.computedWidth_ = 0;
-    // this.currentTranslateOffset_ = 0;
+    this.computedFrameWidth_ = 0;
     // this.bindEvents_();
-    // requestAnimationFrame(() => this.layout());
+    requestAnimationFrame(() => this.layout());
   }
 
   getDefaultFoundation() {
     return new MDCTabsScrollerFoundation({
-      isRTL: () => getComputedStyle(this.root_).getPropertyValue('direction') === 'rtl',
-      registerLeftIndicatorInteractionHandler: (handler) => this.leftIndicator_.addEventListener('click', handler),
-      deregisterLeftIndicatorInteractionHandler: (handler) => this.leftIndicator_.removeEventListener('click', handler),
-      registerRightIndicatorInteractionHandler: (handler) => this.rightIndicator_.addEventListener('click', handler),
-      deregisterRightIndicatorInteractionHandler: (handler) => this.rightIndicator_.removeEventListener('click', handler),
-      scrollLeft: this.scrollLeft,
-      scrollRight: this.scrollRight,
+      isRTL: () => getComputedStyle(this.root_.root_).getPropertyValue('direction') === 'rtl',
+      registerLeftIndicatorInteractionHandler: (handler) => this.shiftLeftTarget_.addEventListener('click', handler),
+      deregisterLeftIndicatorInteractionHandler: (handler) => this.shiftLeftTarget_.removeEventListener('click', handler),
+      registerRightIndicatorInteractionHandler: (handler) => this.shiftRightTarget_.addEventListener('click', handler),
+      deregisterRightIndicatorInteractionHandler: (handler) => this.shiftRightTarget_.removeEventListener('click', handler),
+      scrollLeft: () => this.scrollLeft(),
+      scrollRight: () => this.scrollRight(),
     });
-    // return new MDCTabsScrollerFoundation({
-		// 	addClass: (/* className: string */) => {},
-    //   removeClass: (/* className: string */) => {},
-    //   hasClass: (/* className: string */) => {},
-    //   registerInteractionHandler: (/* type: string, handler: EventListener, useCapture: boolean */) => {},
-    //   deregisterInteractionHandler: (/* type: string, handler: EventListener */) => {},
-    //   registerResizeHandler: (/* handler: EventListener */) => {},
-    //   deregisterResizeHandler: (/* handler: EventListener */) => {},
-    //   eventTargetHasClass: (/* target: EventTarget, className: string */) => /* boolean */ false,
-    //   isEventTargetAncestorOfForwardIndicator: (/* target: EventTarget */) => /* boolean */ false,
-    //   isEventTargetAncestorOfBackIndicator: (/* target: EventTarget */) => /* boolean */ false,
-    //   addClassToBackIndicator: (/* className: string */) => {},
-    //   removeClassFromBackIndicator: (/* className: string */) => {},
-    //   backIndicatorHasClass: (/* className: string */) => {},
-    //   addClassToForwardIndicator: (/* className: string */) => {},
-    //   removeClassFromForwardIndicator: (/* className: string */) => {},
-    //   forwardIndicatorHasClass: (/* className: string */) => {},
-    //   getOffsetWidth: () => /* number */ 0,
-    //   getBackIndicatorOffsetWidth: () => /* number */ 0,
-    //   getForwardIndicatorOffsetWidth: () => /* number */ 0,
-    //   getNumberOfTabs: () => /* number */ 0,
-    //   getOffsetLeftForTabAtIndex: (/* index: number */) => /* number */ 0,
-    //   getOffsetWidthForTabAtIndex: (/* index: number */) => /* number */ 0,
-    //   setStyleForWrapperElement: (/* propertyName: string, value: string */) => {},
-    //   isRTL: () => /* boolean */ false,
-		// });
   }
-
 
   // bindEvents_() {
   //   ['touchstart', 'mousedown'].forEach((evtType) => {
@@ -95,8 +72,8 @@ export class MDCTabsScroller extends MDCComponent {
   //     if (this.pointerDownRecognized_) {
   //       this.el_.classList.remove(MDCTabsScroller.cssClasses.FOCUSED_CHILD);
   //     }
-  //     else if (!isAncestorOf(evt.target, this.leftIndicator_) &&
-  //              !isAncestorOf(evt.target, this.rightIndicator_)) {
+  //     else if (!isAncestorOf(evt.target, this.shiftLeftTarget_) &&
+  //              !isAncestorOf(evt.target, this.shiftRightTarget_)) {
   //       this.el_.classList.add(MDCTabsScroller.cssClasses.FOCUSED_CHILD);
   //     }
   //     this.pointerDownRecognized_ = false;
@@ -111,17 +88,17 @@ export class MDCTabsScroller extends MDCComponent {
   //     }
   //   }, true);
   //
-  //   this.leftIndicator_.addEventListener('click', (evt) => {
+  //   this.shiftLeftTarget_.addEventListener('click', (evt) => {
   //     evt.preventDefault();
-  //     if (this.leftIndicator_.classList.contains(MDCTabsScroller.cssClasses.INDICATOR_DISABLED)) {
+  //     if (this.shiftLeftTarget_.classList.contains(MDCTabsScroller.cssClasses.INDICATOR_DISABLED)) {
   //       return;
   //     }
   //     this.scrollLeft();
   //   });
   //
-  //   this.rightIndicator_.addEventListener('click', (evt) => {
+  //   this.shiftRightTarget_.addEventListener('click', (evt) => {
   //     evt.preventDefault();
-  //     if (this.rightIndicator_.classList.contains(MDCTabsScroller.cssClasses.INDICATOR_DISABLED)) {
+  //     if (this.shiftRightTarget_.classList.contains(MDCTabsScroller.cssClasses.INDICATOR_DISABLED)) {
   //       return;
   //     }
   //     this.scrollRight();
@@ -131,20 +108,19 @@ export class MDCTabsScroller extends MDCComponent {
   // }
 
   layout() {
-    this.root_.layout();
-    this.computedWrapperWidth_ = this.scrollFrame_.offsetWidth;
-    this.computedWidth_ =
-      this.el_.offsetWidth - this.leftIndicator_.offsetWidth - this.rightIndicator_.offsetWidth;
-    const isOverflowing = this.el_.offsetWidth < this.computedWrapperWidth_;
+    this.computedFrameWidth_ = this.scrollFrame_.offsetWidth;
+
+    const isOverflowing = this.tabsWrapper_.offsetWidth > this.computedFrameWidth_;
+
     if (isOverflowing) {
-      this.el_.classList.add(MDCTabsScroller.cssClasses.VISIBLE);
+      this.tabsWrapper_.classList.add(MDCTabsScrollerFoundation.cssClasses.VISIBLE);
     }
     else {
-      this.el_.classList.remove(MDCTabsScroller.cssClasses.VISIBLE);
+      this.tabsWrapper_.classList.remove(MDCTabsScrollerFoundation.cssClasses.VISIBLE);
       this.currentTranslateOffset_ = 0;
       this.shiftFrame_();
     }
-    this.updateIndicatorEnabledStates_();
+    // this.updateIndicatorEnabledStates_();
   }
 
   scrollLeft() {
@@ -153,12 +129,12 @@ export class MDCTabsScroller extends MDCComponent {
     let accum = 0;
     let viewAreaMin = this.currentTranslateOffset_;
 
-    for (let i = this.frameTabs_.length - 1, tab; tab = this.frameTabs_[i]; i--) {
+    for (let i = this.mdcTabsInstance_.tabs.length - 1, tab; tab = this.mdcTabsInstance_.tabs[i]; i--) {
       if (tab.computedLeft > viewAreaMin) {
         continue;
       }
-      accum += tab.computedWidth;
-      if (accum >= this.computedWidth_) {
+      accum += tab.computedWidth_;
+      if (accum >= this.computedFrameWidth_) {
         tabToScrollTo = tab;
         break;
       }
@@ -168,54 +144,54 @@ export class MDCTabsScroller extends MDCComponent {
       if (!accum) {
         return;
       }
-      tabToScrollTo = this.frameTabs_[0];
+      tabToScrollTo = this.mdcTabsInstance_.tabs[0];
     }
 
     this.scrollToTab(tabToScrollTo);
   }
 
   scrollRight() {
-    var tabToScrollTo;
-    // TODO better name
-    const viewAreaMax = this.currentTranslateOffset_ + this.computedWidth_;
+    let scrollTarget;
 
-    for (let tab of this.frameTabs_) {
-      if (tab.computedLeft + tab.computedWidth >= viewAreaMax) {
-        tabToScrollTo = tab;
+    for (let tab of this.mdcTabsInstance_.tabs) {
+      if (tab.computedLeft_ + tab.computedWidth_ >= this.scrollFrame_.offsetWidth) {
+        scrollTarget = tab;
         break;
       }
     }
 
-    if (!tabToScrollTo) {
+    if (!scrollTarget) {
       return;
     }
 
-    this.scrollToTab(tabToScrollTo);
+    this.scrollToTab(scrollTarget);
   }
 
   scrollToTab(tab) {
-    this.currentTranslateOffset_ = tab.computedLeft;
+    console.log(tab);
+    this.currentTranslateOffset_ = tab.computedLeft_;
     requestAnimationFrame(() => this.shiftFrame_());
   }
 
-shiftFrame_() {
-    this.scrollFrame_.style.transform =
-      this.scrollFrame_.style.webkitTransform = `translateX(${-this.currentTranslateOffset_}px)`;
-    this.updateIndicatorEnabledStates_();
+  shiftFrame_() {
+    console.log("shifting: ", this.currentTranslateOffset_);
+    this.tabsWrapper_.style.transform =
+      this.tabsWrapper_.style.webkitTransform = `translateX(${-this.currentTranslateOffset_}px)`;
+    // this.updateIndicatorEnabledStates_();
   }
 
   updateIndicatorEnabledStates_() {
     if (this.currentTranslateOffset_ === 0) {
-      this.leftIndicator_.classList.add(MDCTabsScroller.cssClasses.INDICATOR_DISABLED);
+      this.shiftLeftTarget_.classList.add(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     }
     else {
-      this.leftIndicator_.classList.remove(MDCTabsScroller.cssClasses.INDICATOR_DISABLED);
+      this.shiftLeftTarget_.classList.remove(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     }
-    if (this.currentTranslateOffset_ + this.computedWidth_ >= this.computedWrapperWidth_) {
-      this.rightIndicator_.classList.add(MDCTabsScroller.cssClasses.INDICATOR_DISABLED);
+    if (this.currentTranslateOffset_ + this.computedFrameWidth_ >= this.computedWrapperWidth_) {
+      this.shiftRightTarget_.classList.add(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     }
     else {
-      this.rightIndicator_.classList.remove(MDCTabsScroller.cssClasses.INDICATOR_DISABLED);
+      this.shiftRightTarget_.classList.remove(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     }
   }
 }

@@ -84,6 +84,7 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   init() {
     this.adapter_.registerLeftIndicatorInteractionHandler(this.leftIndicatorClickHandler);
     this.adapter_.registerRightIndicatorInteractionHandler(this.rightIndicatorClickHandler);
+
     // this.pointerRecognitionEvents_.forEach((evtType) => {
     //   this.adapter_.registerInteractionHandler(evtType, this.pointerRecognitionHandler_, true);
     // });
