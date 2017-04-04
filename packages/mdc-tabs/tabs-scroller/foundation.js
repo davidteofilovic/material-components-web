@@ -35,6 +35,7 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
       deregisterLeftIndicatorInteractionHandler: (/* handler: EventListener */) => {},
       registerRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
       deregisterRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
+      registerWindowResizeHandler: (/* handler: EventListener */) => {},
       scrollLeft: () => {},
       scrollRight: () => {},
     }
@@ -84,6 +85,7 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   init() {
     this.adapter_.registerLeftIndicatorInteractionHandler(this.leftIndicatorClickHandler);
     this.adapter_.registerRightIndicatorInteractionHandler(this.rightIndicatorClickHandler);
+    this.adapter_.registerWindowResizeHandler(this.adapter_.triggerNewLayout);
 
     // this.pointerRecognitionEvents_.forEach((evtType) => {
     //   this.adapter_.registerInteractionHandler(evtType, this.pointerRecognitionHandler_, true);

@@ -43,8 +43,8 @@ export class MDCTabsScroller extends MDCComponent {
     this.shiftLeftTarget_ = this.scrollFrame_.previousElementSibling;
     this.shiftRightTarget_ = this.scrollFrame_.nextElementSibling;
     this.currentTranslateOffset_ = 0;
-    // this.pointerDownRecognized_ = false;
     this.computedFrameWidth_ = 0;
+    // this.pointerDownRecognized_ = false;
     // this.bindEvents_();
     requestAnimationFrame(() => this.layout());
   }
@@ -56,6 +56,8 @@ export class MDCTabsScroller extends MDCComponent {
       deregisterLeftIndicatorInteractionHandler: (handler) => this.shiftLeftTarget_.removeEventListener('click', handler),
       registerRightIndicatorInteractionHandler: (handler) => this.shiftRightTarget_.addEventListener('click', handler),
       deregisterRightIndicatorInteractionHandler: (handler) => this.shiftRightTarget_.removeEventListener('click', handler),
+      registerWindowResizeHandler: (handler) => window.addEventListener('resize', handler),
+      triggerNewLayout: () => requestAnimationFrame(() => this.layout()),
       scrollLeft: () => this.scrollLeft(),
       scrollRight: () => this.scrollRight(),
     });
@@ -120,30 +122,28 @@ export class MDCTabsScroller extends MDCComponent {
       this.currentTranslateOffset_ = 0;
       this.shiftFrame_();
     }
-    // this.updateIndicatorEnabledStates_();
+
+    this.updateIndicatorEnabledStates_();
   }
 
   scrollLeft() {
     let tabToScrollTo;
-    // TODO better name
-    let accum = 0;
-    let viewAreaMin = this.currentTranslateOffset_;
+    let tabWidthAccumulator = 0;
 
     for (let i = this.mdcTabsInstance_.tabs.length - 1, tab; tab = this.mdcTabsInstance_.tabs[i]; i--) {
-      if (tab.computedLeft > viewAreaMin) {
+      if (tab.computedLeft_ >= this.currentTranslateOffset_) {
         continue;
       }
-      accum += tab.computedWidth_;
-      if (accum >= this.computedFrameWidth_) {
-        tabToScrollTo = tab;
+
+      tabWidthAccumulator += tab.computedWidth_;
+
+      if (tabWidthAccumulator > this.computedFrameWidth_) {
+        tabToScrollTo = this.mdcTabsInstance_.tabs[this.mdcTabsInstance_.tabs.indexOf(tab) + 1];
         break;
       }
     }
 
     if (!tabToScrollTo) {
-      if (!accum) {
-        return;
-      }
       tabToScrollTo = this.mdcTabsInstance_.tabs[0];
     }
 
@@ -152,9 +152,10 @@ export class MDCTabsScroller extends MDCComponent {
 
   scrollRight() {
     let scrollTarget;
+    const frameOffset = this.computedFrameWidth_ + this.currentTranslateOffset_;
 
     for (let tab of this.mdcTabsInstance_.tabs) {
-      if (tab.computedLeft_ + tab.computedWidth_ >= this.scrollFrame_.offsetWidth) {
+      if (tab.computedLeft_ + tab.computedWidth_ >= frameOffset) {
         scrollTarget = tab;
         break;
       }
@@ -168,16 +169,14 @@ export class MDCTabsScroller extends MDCComponent {
   }
 
   scrollToTab(tab) {
-    console.log(tab);
     this.currentTranslateOffset_ = tab.computedLeft_;
     requestAnimationFrame(() => this.shiftFrame_());
   }
 
   shiftFrame_() {
-    console.log("shifting: ", this.currentTranslateOffset_);
     this.tabsWrapper_.style.transform =
       this.tabsWrapper_.style.webkitTransform = `translateX(${-this.currentTranslateOffset_}px)`;
-    // this.updateIndicatorEnabledStates_();
+    this.updateIndicatorEnabledStates_();
   }
 
   updateIndicatorEnabledStates_() {
@@ -187,7 +186,8 @@ export class MDCTabsScroller extends MDCComponent {
     else {
       this.shiftLeftTarget_.classList.remove(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     }
-    if (this.currentTranslateOffset_ + this.computedFrameWidth_ >= this.computedWrapperWidth_) {
+
+    if (this.currentTranslateOffset_ + this.computedFrameWidth_ > this.tabsWrapper_.offsetWidth) {
       this.shiftRightTarget_.classList.add(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     }
     else {
