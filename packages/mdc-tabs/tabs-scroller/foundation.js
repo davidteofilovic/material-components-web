@@ -36,33 +36,10 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
       registerRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
       deregisterRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
       registerWindowResizeHandler: (/* handler: EventListener */) => {},
+      deregisterWindowResizeHandler: () => {},
       scrollLeft: () => {},
       scrollRight: () => {},
     }
-    //return {
-    //  addClass: (/* className: string */) => {},
-    //  removeClass: (/* className: string */) => {},
-    //  hasClass: (/* className: string */) => {}, //  registerInteractionHandler: (/* type: string, handler: EventListener, useCapture: boolean */) => {},
-    //  deregisterInteractionHandler: (/* type: string, handler: EventListener */) => {},
-    //  registerResizeHandler: (/* handler: EventListener */) => {},
-    //  deregisterResizeHandler: (/* handler: EventListener */) => {},
-    //  eventTargetHasClass: (/* target: EventTarget, className: string */) => /* boolean */ false,
-    //  isEventTargetAncestorOfForwardIndicator: (/* target: EventTarget */) => /* boolean */ false,
-    //  isEventTargetAncestorOfBackIndicator: (/* target: EventTarget */) => /* boolean */ false,
-    //  addClassToBackIndicator: (/* className: string */) => {},
-    //  removeClassFromBackIndicator: (/* className: string */) => {},
-    //  backIndicatorHasClass: (/* className: string */) => {},
-    //  addClassToForwardIndicator: (/* className: string */) => {},
-    //  removeClassFromForwardIndicator: (/* className: string */) => {},
-    //  forwardIndicatorHasClass: (/* className: string */) => {},
-    //  getOffsetWidth: () => /* number */ 0,
-    //  getBackIndicatorOffsetWidth: () => /* number */ 0,
-    //  getForwardIndicatorOffsetWidth: () => /* number */ 0,
-    //  getNumberOfTabs: () => /* number */ 0,
-    //  getOffsetLeftForTabAtIndex: (/* index: number */) => /* number */ 0,
-    //  getOffsetWidthForTabAtIndex: (/* index: number */) => /* number */ 0,
-    //  setStyleForWrapperElement: (/* propertyName: string, value: string */) => {},
-    //};
   }
 
   constructor(adapter) {
@@ -70,38 +47,18 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
 
     this.rightIndicatorClickHandler = () => this.scrollRight();
     this.leftIndicatorClickHandler = () => this.scrollLeft();
-    // this.computedWrapperWidth_ = 0;
-    // this.layoutFrame_ = 0;
-    // this.pointerDownRecognized_ = false;
-    // this.pointerRecognitionEvents_ = ['touchstart', 'pointerdown', 'mousedown'];
-    // this.pointerRecognitionHandler_ = () => {
-    //   this.pointerDownRecognized_ = true;
-    // };
-    // this.focusHandler_ = (evt) => this.handleFocus_(evt);
-    // this.clickHandler_ = (evt) => this.handlePossibleIndicatorClick_(evt);
-    // this.resizeHandler_ = () => this.layout();
   }
 
   init() {
     this.adapter_.registerLeftIndicatorInteractionHandler(this.leftIndicatorClickHandler);
     this.adapter_.registerRightIndicatorInteractionHandler(this.rightIndicatorClickHandler);
     this.adapter_.registerWindowResizeHandler(this.adapter_.triggerNewLayout);
-
-    // this.pointerRecognitionEvents_.forEach((evtType) => {
-    //   this.adapter_.registerInteractionHandler(evtType, this.pointerRecognitionHandler_, true);
-    // });
-    // this.adapter_.registerInteractionHandler('focus', this.focusHandler_, true);
-    // this.adapter_.registerInteractionHandler('click', this.clickHandler_);
   }
 
   destroy() {
     this.adapter_.deregisterLeftIndicatorInteractionHandler(this.leftIndicatorClickHandler);
     this.adapter_.deregisterRightIndicatorInteractionHandler(this.rightIndicatorClickHandler);
-    // this.pointerRecognitionEvents_.forEach((evtType) => {
-    //   this.adapter_.deregisterInteractionHandler(evtType, this.pointerRecognitionHandler_);
-    // });
-    // this.adapter_.deregisterInteractionHandler('focus', this.focusHandler_);
-    // this.adapter_.deregisterInteractionHandler('click', this.clickHandler_);
+    this.adapter_.deregisterWindowResizeHandler(this.adapter_.triggerNewLayout);
   }
 
   scrollRight() {
@@ -111,40 +68,4 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   scrollLeft() {
     this.adapter_.isRTL() ? this.adapter_.scrollRight() : this.adapter_.scrollLeft();
   }
-
-  scrollToTab(tab) {
-    this.currentTranslateOffset_ = tab.computedLeft;
-    requestAnimationFrame(() => this.shiftFrame_());
-  }
-
-//  handleFocus_(evt) {
-//    // TODO
-//  }
-//
-//  handleBlur_(evt) {
-//    // TODO
-//  }
-
-//  handlePossibleIndicatorClick_(evt) {
-//    const {
-//      INDICATOR_FORWARD,
-//      INDICATOR_BACK,
-//      INDICATOR_DISABLED,
-//    } = cssClasses;
-//    const {target} = evt;
-//    const shouldScrollForward = (
-//      this.adapter_.eventTargetHasClass(target, INDICATOR_FORWARD) &&
-//      !this.adapter_.eventTargetHasClass(target, INDICATOR_DISABLED)
-//    );
-//    const shouldScrollBack = (
-//      this.adapter_.eventTargetHasClass(target, INDICATOR_BACK) &&
-//      !this.adapter_.eventTargetHasClass(target, INDICATOR_DISABLED)
-//    );
-//
-//    if (shouldScrollForward) {
-//      this.scrollForward();
-//    } else if (shouldScrollBack) {
-//      this.scrollBack();
-//    }
-//  }
 }

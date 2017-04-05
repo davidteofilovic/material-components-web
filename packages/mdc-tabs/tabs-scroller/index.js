@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-// TODO(traviskaufman): Come up with better UX solve when tabs wrapper scrolls due to tab focusing
-// (e.g. on blur, reset scroll offset and translate properly so that active tab is in view.)?
-// TODO(traviskaufman): Consider case where tabs inside scroller are adjusted programmatically
-// (e.g. should we auto-translate the scroller to keep up with the tabs?).?
-
 import MDCComponent from '@material/base/component';
 
 import {MDCTab} from '../tab';
@@ -44,8 +39,6 @@ export class MDCTabsScroller extends MDCComponent {
     this.shiftRightTarget_ = this.scrollFrame_.nextElementSibling;
     this.currentTranslateOffset_ = 0;
     this.computedFrameWidth_ = 0;
-    // this.pointerDownRecognized_ = false;
-    // this.bindEvents_();
     requestAnimationFrame(() => this.layout());
   }
 
@@ -57,57 +50,12 @@ export class MDCTabsScroller extends MDCComponent {
       registerRightIndicatorInteractionHandler: (handler) => this.shiftRightTarget_.addEventListener('click', handler),
       deregisterRightIndicatorInteractionHandler: (handler) => this.shiftRightTarget_.removeEventListener('click', handler),
       registerWindowResizeHandler: (handler) => window.addEventListener('resize', handler),
+      deregisterWindowResizeHandler: (handler) => window.removeEventListener('resize', handler),
       triggerNewLayout: () => requestAnimationFrame(() => this.layout()),
       scrollLeft: () => this.scrollLeft(),
       scrollRight: () => this.scrollRight(),
     });
   }
-
-  // bindEvents_() {
-  //   ['touchstart', 'mousedown'].forEach((evtType) => {
-  //     this.el_.addEventListener(evtType, () => {
-  //       this.pointerDownRecognized_ = true;
-  //     }, true);
-  //   });
-  //
-  //   this.el_.addEventListener('focus', (evt) => {
-  //     if (this.pointerDownRecognized_) {
-  //       this.el_.classList.remove(MDCTabsScroller.cssClasses.FOCUSED_CHILD);
-  //     }
-  //     else if (!isAncestorOf(evt.target, this.shiftLeftTarget_) &&
-  //              !isAncestorOf(evt.target, this.shiftRightTarget_)) {
-  //       this.el_.classList.add(MDCTabsScroller.cssClasses.FOCUSED_CHILD);
-  //     }
-  //     this.pointerDownRecognized_ = false;
-  //   }, true);
-  //
-  //   this.el_.addEventListener('blur', (evt) => {
-  //     if (!this.el_.classList.contains(MDCTabsScroller.cssClasses.FOCUSED_CHILD)) {
-  //       return;
-  //     }
-  //     if (!evt.relatedTarget || !isAncestorOf(evt.relatedTarget, this.el_)) {
-  //       this.el_.classList.remove(MDCTabsScroller.cssClasses.FOCUSED_CHILD);
-  //     }
-  //   }, true);
-  //
-  //   this.shiftLeftTarget_.addEventListener('click', (evt) => {
-  //     evt.preventDefault();
-  //     if (this.shiftLeftTarget_.classList.contains(MDCTabsScroller.cssClasses.INDICATOR_DISABLED)) {
-  //       return;
-  //     }
-  //     this.scrollLeft();
-  //   });
-  //
-  //   this.shiftRightTarget_.addEventListener('click', (evt) => {
-  //     evt.preventDefault();
-  //     if (this.shiftRightTarget_.classList.contains(MDCTabsScroller.cssClasses.INDICATOR_DISABLED)) {
-  //       return;
-  //     }
-  //     this.scrollRight();
-  //   });
-  //
-  //   window.addEventListener('resize', () => requestAnimationFrame(() => this.layout()));
-  // }
 
   layout() {
     this.computedFrameWidth_ = this.scrollFrame_.offsetWidth;
