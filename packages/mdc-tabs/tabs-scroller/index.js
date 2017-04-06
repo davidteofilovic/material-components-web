@@ -32,6 +32,7 @@ export class MDCTabsScroller extends MDCComponent {
   }
 
   initialize() {
+    this.isRTL = false;
     this.mdcTabsInstance_ = this.root_;
     this.tabsWrapper_ = this.mdcTabsInstance_.root_;
     this.scrollFrame_ = this.tabsWrapper_.parentElement;
@@ -52,8 +53,8 @@ export class MDCTabsScroller extends MDCComponent {
       registerWindowResizeHandler: (handler) => window.addEventListener('resize', handler),
       deregisterWindowResizeHandler: (handler) => window.removeEventListener('resize', handler),
       triggerNewLayout: () => requestAnimationFrame(() => this.layout()),
-      scrollLeft: () => this.scrollLeft(),
-      scrollRight: () => this.scrollRight(),
+      scrollLeft: (isRTL) => this.scrollLeft(isRTL),
+      scrollRight: (isRTL) => this.scrollRight(isRTL),
     });
   }
 
@@ -74,9 +75,11 @@ export class MDCTabsScroller extends MDCComponent {
     this.updateIndicatorEnabledStates_();
   }
 
-  scrollLeft() {
+  scrollLeft(isRTL) {
     let tabToScrollTo;
     let tabWidthAccumulator = 0;
+
+    this.isRTL = isRTL;
 
     for (let i = this.mdcTabsInstance_.tabs.length - 1, tab; tab = this.mdcTabsInstance_.tabs[i]; i--) {
       if (tab.computedLeft_ >= this.currentTranslateOffset_) {
@@ -98,9 +101,11 @@ export class MDCTabsScroller extends MDCComponent {
     this.scrollToTab(tabToScrollTo);
   }
 
-  scrollRight() {
+  scrollRight(isRTL) {
     let scrollTarget;
     const frameOffset = this.computedFrameWidth_ + this.currentTranslateOffset_;
+
+    this.isRTL = isRTL;
 
     for (let tab of this.mdcTabsInstance_.tabs) {
       if (tab.computedLeft_ + tab.computedWidth_ >= frameOffset) {
@@ -122,8 +127,12 @@ export class MDCTabsScroller extends MDCComponent {
   }
 
   shiftFrame_() {
+    this.currentTranslateOffset_ = this.isRTL ?
+      this.currentTranslateOffset_ : -this.currentTranslateOffset_;
+
     this.tabsWrapper_.style.transform =
-      this.tabsWrapper_.style.webkitTransform = `translateX(${-this.currentTranslateOffset_}px)`;
+      this.tabsWrapper_.style.webkitTransform = `translateX(${this.currentTranslateOffset_}px)`;
+
     this.updateIndicatorEnabledStates_();
   }
 

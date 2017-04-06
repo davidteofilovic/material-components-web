@@ -45,8 +45,8 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   constructor(adapter) {
     super(Object.assign(MDCTabsScrollerFoundation.defaultAdapter, adapter));
 
-    this.rightIndicatorClickHandler = () => this.scrollRight();
-    this.leftIndicatorClickHandler = () => this.scrollLeft();
+    this.rightIndicatorClickHandler = () => this.scrollRight(this.adapter_.isRTL());
+    this.leftIndicatorClickHandler = () => this.scrollLeft(this.adapter_.isRTL());
   }
 
   init() {
@@ -61,11 +61,11 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
     this.adapter_.deregisterWindowResizeHandler(this.adapter_.triggerNewLayout);
   }
 
-  scrollRight() {
-    this.adapter_.isRTL() ? this.adapter_.scrollLeft() : this.adapter_.scrollRight();
+  scrollRight(isRTL) {
+    this.adapter_.scrollRight(isRTL);
   }
 
-  scrollLeft() {
-    this.adapter_.isRTL() ? this.adapter_.scrollRight() : this.adapter_.scrollLeft();
+  scrollLeft(isRTL) {
+    this.adapter_.scrollLeft(isRTL);
   }
 }
