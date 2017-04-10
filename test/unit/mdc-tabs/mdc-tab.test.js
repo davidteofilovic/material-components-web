@@ -24,7 +24,10 @@ import {strings} from '../../../packages/mdc-tabs/tab/constants';
 import {MDCTab} from '../../../packages/mdc-tabs/tab';
 
 function getFixture() {
-  return bel`<a class="mdc-tab mdc-tab--active" href="#one">Item One</a>`;
+  return bel`
+    <div>
+      <a class="mdc-tab mdc-tab--active" href="#one">Item One</a>
+    </div>`;
 }
 
 function setupTest() {
@@ -41,9 +44,10 @@ test('attachTo returns a component instance', () => {
 });
 
 if (supportsCssVariables(window)) {
-  test.only('#destroy cleans up ripple on tab', () => {
+  test('#destroy cleans up ripple on tab', () => {
     const raf = createMockRaf();
-    const {component} = setupTest();
+    const {fixture, root, component} = setupTest();
+
     raf.flush();
 
     component.destroy();
@@ -86,4 +90,30 @@ test('adapter#deregisterInteractionHandler removes an event listener from the ro
   domEvents.emit(root, 'click');
 
   td.verify(handler(td.matchers.anything()), {times: 0});
+});
+
+test('adapter#getOffsetWidth returns the width of the tab', () => {
+  const {component} = setupTest();
+
+  assert.equal(component.getDefaultFoundation().adapter_.getOffsetWidth(), 0);
+});
+
+test('adapter#getOffsetLeft returns the distance that '+
+  'the left edge of the tab is from the left edge of the frame', () => {
+  const {component} = setupTest();
+
+  assert.equal(component.getDefaultFoundation().adapter_.getOffsetLeft(), 0);
+});
+
+test('adapter#notifySelected emits MDCTab:selected', () => {
+  test('adapter#notifyAccept emits MDCDialog:accept', () => {
+    const {component} = setupTest();
+
+    const handler = td.func('acceptHandler');
+
+    component.listen('MDCTab:selected', handler);
+    component.getDefaultFoundation().adapter_.notifySelected();
+
+    td.verify(handler(td.matchers.anything()));
+  });
 });
