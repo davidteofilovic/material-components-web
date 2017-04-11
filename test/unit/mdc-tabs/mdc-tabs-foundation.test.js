@@ -82,18 +82,6 @@ test('#destroy deregisters tab event handlers', () => {
   td.verify(mockAdapter.deregisterResizeHandler(isA(Function)));
 });
 
-test('#getActiveTabIndex returns activeTabIndex_', () => {
-  const {foundation} = setupTest();
-
-  assert.equal(foundation.getActiveTabIndex(), 0);
-})
-
-test('#getComputedWidth returns width of tabs frame', () => {
-  const {foundation} = setupTest();
-
-  assert.equal(foundation.getComputedWidth(), 0);
-})
-
 //
 // test('#setActive removes active class when isActive is false', () => {
 //   const {foundation, mockAdapter} = setupTest();
