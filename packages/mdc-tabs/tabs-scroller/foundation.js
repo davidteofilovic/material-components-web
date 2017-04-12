@@ -37,6 +37,7 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
       deregisterRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
       registerWindowResizeHandler: (/* handler: EventListener */) => {},
       deregisterWindowResizeHandler: () => {},
+      triggerNewLayout: () => {},
       scrollLeft: () => {},
       scrollRight: () => {},
     }

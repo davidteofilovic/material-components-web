@@ -16,24 +16,21 @@
 
 import MDCComponent from '@material/base/component';
 
-import {MDCTab} from '../tab';
+import {MDCTabs} from '../tabs';
 import {strings} from './constants';
 import MDCTabsScrollerFoundation from './foundation';
 
 export {MDCTabsScrollerFoundation};
 
 export class MDCTabsScroller extends MDCComponent {
-  static attachTo(root) {
-    return new MDCTabsScroller(root);
+  static attachTo(root, tabs) {
+
+    return new MDCTabsScroller(root, undefined, tabs);
   }
 
-  get tabs() {
-    return this.root_.tabs;
-  }
-
-  initialize() {
+  initialize(tabs) {
     this.isRTL = false;
-    this.mdcTabsInstance_ = this.root_;
+    this.mdcTabsInstance_ = tabs;
     this.tabsWrapper_ = this.mdcTabsInstance_.root_;
     this.scrollFrame_ = this.tabsWrapper_.parentElement;
     this.shiftLeftTarget_ = this.scrollFrame_.previousElementSibling;
@@ -45,7 +42,7 @@ export class MDCTabsScroller extends MDCComponent {
 
   getDefaultFoundation() {
     return new MDCTabsScrollerFoundation({
-      isRTL: () => getComputedStyle(this.root_.root_).getPropertyValue('direction') === 'rtl',
+      isRTL: () => getComputedStyle(this.root_).getPropertyValue('direction') === 'rtl',
       registerLeftIndicatorInteractionHandler: (handler) => this.shiftLeftTarget_.addEventListener('click', handler),
       deregisterLeftIndicatorInteractionHandler: (handler) => this.shiftLeftTarget_.removeEventListener('click', handler),
       registerRightIndicatorInteractionHandler: (handler) => this.shiftRightTarget_.addEventListener('click', handler),
@@ -78,7 +75,6 @@ export class MDCTabsScroller extends MDCComponent {
   scrollLeft(isRTL) {
     let tabToScrollTo;
     let tabWidthAccumulator = 0;
-
     this.isRTL = isRTL;
 
     for (let i = this.mdcTabsInstance_.tabs.length - 1, tab; tab = this.mdcTabsInstance_.tabs[i]; i--) {
@@ -104,7 +100,6 @@ export class MDCTabsScroller extends MDCComponent {
   scrollRight(isRTL) {
     let scrollTarget;
     const frameOffset = this.computedFrameWidth_ + this.currentTranslateOffset_;
-
     this.isRTL = isRTL;
 
     for (let tab of this.mdcTabsInstance_.tabs) {
@@ -127,11 +122,11 @@ export class MDCTabsScroller extends MDCComponent {
   }
 
   shiftFrame_() {
-    this.currentTranslateOffset_ = this.isRTL ?
+    let shiftDistance = this.isRTL ?
       this.currentTranslateOffset_ : -this.currentTranslateOffset_;
 
     this.tabsWrapper_.style.transform =
-      this.tabsWrapper_.style.webkitTransform = `translateX(${this.currentTranslateOffset_}px)`;
+      this.tabsWrapper_.style.webkitTransform = `translateX(${shiftDistance}px)`;
 
     this.updateIndicatorEnabledStates_();
   }

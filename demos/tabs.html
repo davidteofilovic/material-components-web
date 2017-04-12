@@ -54,13 +54,12 @@ https://www.apache.org/licenses/LICENSE-2.0
     <div class="demo-body">
 
 			<h1>Tabs</h1>
-<button type="button" class="mdc-button mdc-button--primary toggle-rtl" onclick="this.parentElement.hasAttribute('dir') ? this.parentElement.removeAttribute('dir') : this.parentElement.setAttribute('dir', 'rtl');">Toggle RTL</button>
+      <button type="button" class="mdc-button mdc-button--primary toggle-rtl" onclick="this.parentElement.hasAttribute('dir') ? this.parentElement.removeAttribute('dir') : this.parentElement.setAttribute('dir', 'rtl');">Toggle RTL</button>
 			<!-- TODO: Consider RTL, Dark Theme -->
 
 			<section>
 			  <h2>Basic tabs</h2>
 			  <nav id="basic-tabs" class="mdc-tabs">
-			    <!-- Note that mdc-ripple-surface is used here for demo purposes only. mdc-tab would mix in the ripple in the actual impl -->
 			    <a class="mdc-tab mdc-tab--active" href="#one">Item One</a>
 			    <a class="mdc-tab" href="#two">Item Two</a>
 			    <a class="mdc-tab" href="#three">Three</a>
@@ -84,7 +83,7 @@ https://www.apache.org/licenses/LICENSE-2.0
 			  <div id="tabs-scroller" class="mdc-tabs-scroller" data-md-autoinit>
 			    <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--left">
 			      <a class="mdc-tabs-scroller__indicator__inner material-icons" href="#" aria-label="scroll back button">
-              keyboard-arrow-left
+              keyboard_arrow_left
 			      </a>
 			    </div>
 			    <div class="mdc-tabs-scroller__scroll-frame">
@@ -103,7 +102,7 @@ https://www.apache.org/licenses/LICENSE-2.0
 			    </div>
 			    <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--right">
 			      <a class="mdc-tabs-scroller__indicator__inner material-icons" href="#" aria-label="scroll forward button">
-			        keyboard-arrow-right
+			        keyboard_arrow_right
 			      </a>
 			    </div>
 			  </div>
@@ -359,7 +358,7 @@ https://www.apache.org/licenses/LICENSE-2.0
       (function() {
         window.basicTabs = new mdc.tabs.MDCTabs(document.querySelector('#basic-tabs'));
         window.scrollableTabs = new mdc.tabs.MDCTabs(document.querySelector('#scrollable-tabs'));
-        window.tabsScroller = new mdc.tabs.MDCTabsScroller(window.scrollableTabs);
+        window.tabsScroller = new mdc.tabs.MDCTabsScroller(document.querySelector('#tabs-scroller'), undefined, window.scrollableTabs);
         window.iconTabs = new mdc.tabs.MDCTabs(document.querySelector('#icon-tabs'));
         window.iconTextTabs = new mdc.tabs.MDCTabs(document.querySelector('#icon-text-tabs'));
         window.toolbarTabs = new mdc.tabs.MDCTabs(document.querySelector('#toolbar-tabs'));

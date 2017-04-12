@@ -67,7 +67,7 @@ export class MDCTabs extends MDCComponent {
       this.setActiveTab_(tab, true);
     };
   }
- 
+
   getDefaultFoundation() {
     return new MDCTabsFoundation({
       addClass: (className) => this.root_.classList.add(className),

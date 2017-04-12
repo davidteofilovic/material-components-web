@@ -70,7 +70,7 @@ test('adapter#bindOnMDCTabSelectedEvent listens for MDCTab:selected on ' +
   component.getDefaultFoundation().adapter_.bindOnMDCTabSelectedEvent();
   domEvents.emit(fixture, 'MDCTab:selected');
 
-
+  // TODO: sheehana
 });
 
 test('adapter#unbindOnMDCTabSelectedEvent removes listener from component', () => {

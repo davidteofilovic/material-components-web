@@ -20,7 +20,7 @@ import {setupFoundationTest} from '../helpers/setup';
 import {verifyDefaultAdapter, captureHandlers} from '../helpers/foundation';
 import {createMockRaf} from '../helpers/raf';
 
-import {cssClasses} from '../../../packages/mdc-tabs/tab/constants';
+import {cssClasses} from '../../../packages/mdc-tabs/tabs/constants';
 import MDCTabsFoundation from '../../../packages/mdc-tabs/tabs/foundation';
 
 suite('MDCTabsFoundation');
@@ -81,33 +81,3 @@ test('#destroy deregisters tab event handlers', () => {
   td.verify(mockAdapter.unbindOnMDCTabSelectedEvent());
   td.verify(mockAdapter.deregisterResizeHandler(isA(Function)));
 });
-
-//
-// test('#setActive removes active class when isActive is false', () => {
-//   const {foundation, mockAdapter} = setupTest();
-//   const {isA} = td.matchers;
-//
-//   foundation.setActive(false);
-//   td.verify(mockAdapter.removeClass(cssClasses.ACTIVE));
-// });
-//
-// test('#setPreventDefaultOnClick sets preventDefaultOnClick_' +
-//  'to true the value of preventDefaultOnClick param', () => {
-//    const {foundation} = setupTest();
-//
-//    foundation.setPreventDefaultOnClick(false);
-//
-//    assert.isFalse(foundation.preventDefaultOnClick_);
-//  })
-//
-// test('#measureSelf sets computedWidth_ and computedLeft_ for tab', () => {
-//   const {foundation, mockAdapter} = setupTest();
-//
-//   td.when(mockAdapter.getOffsetWidth()).thenReturn(200);
-//   td.when(mockAdapter.getOffsetLeft()).thenReturn(100);
-//
-//   foundation.measureSelf();
-//
-//   assert.equal(foundation.computedWidth_, 200);
-//   assert.equal(foundation.computedLeft_, 100);
-// });

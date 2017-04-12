@@ -101,7 +101,7 @@ export default class MDCTabsFoundation extends MDCFoundation {
     if (isIndicatorFirstRender) {
       this.adapter_.setStyleForIndicator('transition', 'none');
     }
-   
+
     const translateAmtForActiveTabLeft = this.adapter_.getComputedLeftForTabAtIndex(this.activeTabIndex_);
     const scaleAmtForActiveTabWidth = this.adapter_.getComputedWidthForTabAtIndex(this.activeTabIndex_) / this.adapter_.getOffsetWidth();
 
@@ -159,25 +159,6 @@ export default class MDCTabsFoundation extends MDCFoundation {
       }
     });
     return activeTabIndex;
-  }
-
-  preventsDefaultOnClick() {
-    let everyTabPreventsDefaultOnClick = true;
-    this.forEachTabIndex_((index) => {
-      everyTabPreventsDefaultOnClick = this.adapter_.isDefaultPreventedOnClickForTabAtIndex(index);
-      if (!everyTabPreventsDefaultOnClick) {
-        // Break out of loop
-        return true;
-      }
-    });
-
-    return everyTabPreventsDefaultOnClick;
-  }
-
-  setPreventDefaultOnClick(preventDefaultOnClick) {
-    this.forEachTabIndex_((index) => {
-      this.adapter_.setPreventDefaultOnClickForTabAtIndex(index, preventDefaultOnClick);
-    });
   }
 
   forEachTabIndex_(iterator) {
