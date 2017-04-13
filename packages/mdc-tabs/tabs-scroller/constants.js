@@ -25,6 +25,7 @@ export const cssClasses = {
 export const strings = {
   FRAME_SELECTOR: '.mdc-tabs-scroller__scroll-frame',
   TABS_SELECTOR: '.mdc-tabs-scroller__scroll-frame__tabs',
+  TAB_SELECTOR: '.mdc-tab',
   INDICATOR_RIGHT_SELECTOR: '.mdc-tabs-scroller__indicator--right',
   INDICATOR_LEFT_SELECTOR: '.mdc-tabs-scroller__indicator--left',
 };
