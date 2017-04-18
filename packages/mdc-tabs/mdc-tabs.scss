@@ -60,23 +60,23 @@
       @include mdc-theme-dark(".mdc-tabs") {
         @include mdc-theme-prop(color, text-secondary-on-dark);
       }
+    }
 
-      &--active,
-      &:hover {
-        @include mdc-theme-prop(color, text-primary-on-primary);
+    .mdc-tab--active,
+    .mdc-tab:hover {
+      @include mdc-theme-prop(color, text-primary-on-primary);
 
-        @include mdc-theme-dark(".mdc-tabs") {
-          @include mdc-theme-prop(color, text-primary-on-dark);
-        }
+      @include mdc-theme-dark(".mdc-tabs") {
+        @include mdc-theme-prop(color, text-primary-on-dark);
       }
+    }
 
-      &::before,
-      &::after {
-        @include mdc-theme-prop(background-color, text-primary-on-primary);
+    .mdc-tab::before,
+    .mdc-tab::after {
+      @include mdc-theme-prop(background-color, text-primary-on-primary);
 
-        @include mdc-theme-dark(".mdc-tabs") {
-          @include mdc-theme-prop(background-color, text-primary-on-dark);
-        }
+      @include mdc-theme-dark(".mdc-tabs") {
+        @include mdc-theme-prop(background-color, text-primary-on-dark);
       }
     }
 
@@ -263,7 +263,8 @@
     @include mdc-theme-prop(background-color, text-primary-on-dark);
 
     @include mdc-theme-dark(".mdc-tabs") {
-      background-color: rgba(0,0,0,0);
+      background-color: transparent;
+
       @include mdc-theme-prop(color, text-primary-on-dark);
     }
 
@@ -274,20 +275,20 @@
       cursor: inherit;
       color: inherit;
 
-      &:hover {
-        color: inherit;
-
-        @include mdc-theme-dark(".mdc-tabs") {
-          @include mdc-theme-prop(color, text-secondary-on-dark);
-        }
-      }
-
       &:focus {
         outline-color: inherit;
       }
 
       @include mdc-rtl(".mdc-tabs") {
         transform: rotate(180deg);
+      }
+    }
+
+    &__inner:hover {
+      color: inherit;
+
+      @include mdc-theme-dark(".mdc-tabs") {
+        @include mdc-theme-prop(color, text-secondary-on-dark);
       }
     }
   }
