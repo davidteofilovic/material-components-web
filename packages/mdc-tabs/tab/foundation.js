@@ -67,7 +67,7 @@ export default class MDCTabFoundation extends MDCFoundation {
     this.adapter_.deregisterInteractionHandler('keydown', this.keydownHandler_);
   }
 
-  getComputedWidth_() {
+  getComputedWidth() {
     return this.computedWidth_;
   }
 
