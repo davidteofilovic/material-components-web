@@ -37,6 +37,10 @@
 
     @include mdc-theme-prop(background-color, text-primary-on-light);
 
+    @include mdc-theme-dark(".mdc-tabs") {
+      @include mdc-theme-prop(background-color, text-primary-on-dark);
+    }
+
     position: absolute;
     bottom: 0;
     left: 0;
@@ -53,22 +57,36 @@
     .mdc-tab {
       @include mdc-theme-prop(color, text-secondary-on-primary);
 
+      @include mdc-theme-dark(".mdc-tabs") {
+        @include mdc-theme-prop(color, text-secondary-on-dark);
+      }
+
       &--active,
       &:hover {
         @include mdc-theme-prop(color, text-primary-on-primary);
+
+        @include mdc-theme-dark(".mdc-tabs") {
+          @include mdc-theme-prop(color, text-primary-on-dark);
+        }
       }
 
       &::before,
       &::after {
         @include mdc-theme-prop(background-color, text-primary-on-primary);
+
+        @include mdc-theme-dark(".mdc-tabs") {
+          @include mdc-theme-prop(background-color, text-primary-on-dark);
+        }
       }
     }
 
     // postcss-bem-linter: ignore
     .mdc-tabs__indicator {
-      background-color: white;
-
       @include mdc-theme-prop(background-color, text-primary-on-primary);
+
+      @include mdc-theme-dark(".mdc-tabs") {
+        @include mdc-theme-prop(background-color, text-primary-on-dark);
+      }
     }
   }
 
@@ -85,6 +103,10 @@
 .mdc-toolbar .mdc-tabs--indicator-primary {
   .mdc-tabs__indicator {
     @include mdc-theme-prop(background-color, primary);
+
+    @include mdc-theme-dark(".mdc-tabs") {
+      @include mdc-theme-prop(background-color, text-primary-on-dark);
+    }
   }
 
   &.mdc-tabs:not(.mdc-tabs-upgraded) .mdc-tab::after {
@@ -118,6 +140,10 @@
   vertical-align: middle;
 
   @include mdc-theme-prop(color, text-secondary-on-light);
+
+  @include mdc-theme-dark(".mdc-tabs") {
+    @include mdc-theme-prop(color, text-secondary-on-dark);
+  }
 
   cursor: pointer;
   white-space: nowrap;
@@ -165,8 +191,16 @@
 
     @include mdc-theme-prop(background-color, text-primary-on-light);
 
+    @include mdc-theme-dark(".mdc-tabs") {
+      @include mdc-theme-prop(background-color, text-primary-on-dark);
+    }
+
     .mdc-toolbar & {
       @include mdc-theme-prop(background-color, text-primary-on-dark);
+
+      @include mdc-theme-dark(".mdc-tabs") {
+        @include mdc-theme-prop(background-color, text-primary-on-dark);
+      }
     }
   }
 
@@ -190,6 +224,10 @@
 
 .mdc-tab--active {
   @include mdc-theme-prop(color, text-primary-on-light);
+
+  @include mdc-theme-dark(".mdc-tabs") {
+    @include mdc-theme-prop(color, text-primary-on-dark);
+  }
 }
 
 // postcss-bem-linter: define tabs-scroller
@@ -223,6 +261,12 @@
     height: 100%;
 
     @include mdc-theme-prop(background-color, text-primary-on-dark);
+
+    @include mdc-theme-dark(".mdc-tabs") {
+      background-color: rgba(0,0,0,0);
+      @include mdc-theme-prop(color, text-primary-on-dark);
+    }
+
     @include mdc-anchor-reset;
 
     &__inner {
@@ -232,10 +276,18 @@
 
       &:hover {
         color: inherit;
+
+        @include mdc-theme-dark(".mdc-tabs") {
+          @include mdc-theme-prop(color, text-secondary-on-dark);
+        }
       }
 
       &:focus {
         outline-color: inherit;
+      }
+
+      @include mdc-rtl(".mdc-tabs") {
+        transform: rotate(180deg);
       }
     }
   }

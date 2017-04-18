@@ -28,7 +28,7 @@ export class MDCTab extends MDCComponent {
   }
 
   get computedWidth() {
-    return this.foundation_.getComputedWidth();
+    return this.foundation_.getComputedWidth_();
   }
 
   get computedLeft() {
