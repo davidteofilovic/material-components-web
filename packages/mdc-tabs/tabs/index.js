@@ -56,7 +56,7 @@ export class MDCTabs extends MDCComponent {
   }
 
   get computedLeft() {
-    return this.computedLeft_;
+    return this.foundation_.getComputedLeft();
   }
 
   initialize(tabFactory = (el) => new MDCTab(el)) {

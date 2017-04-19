@@ -57,6 +57,34 @@ if (supportsCssVariables(window)) {
   });
 }
 
+test('#get computedWidth returns computed width', () => {
+  const {component} = setupTest();
+
+  assert.equal(component.computedWidth, 0);
+});
+
+test('#get computedLeft returns computed left offset', () => {
+  const {component} = setupTest();
+
+  assert.equal(component.computedLeft, 0);
+});
+
+test('#get/set isActive', () => {
+  const {component} = setupTest();
+
+  assert.isFalse(component.isActive);
+  component.isActive = true;
+  assert.isTrue(component.isActive);
+});
+
+test('#get/set preventDefaultOnClick', () => {
+  const {component} = setupTest();
+
+  assert.isFalse(component.preventDefaultOnClick);
+  component.preventDefaultOnClick = true;
+  assert.isTrue(component.preventDefaultOnClick);
+});
+
 test('adapter#addClass adds a class to the root element', () => {
   const {root, component} = setupTest();
   component.getDefaultFoundation().adapter_.addClass('foo');

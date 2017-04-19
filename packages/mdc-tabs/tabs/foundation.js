@@ -129,6 +129,10 @@ export default class MDCTabsFoundation extends MDCFoundation {
     return this.computedWidth_;
   }
 
+  getComputedLeft() {
+    return this.computedLeft_;
+  }
+
   switchToTabAtIndex(index, shouldNotify) {
     if (index === this.activeTabIndex_) {
       return;

@@ -18,6 +18,7 @@ import {assert} from 'chai';
 import bel from 'bel';
 import domEvents from 'dom-events';
 import td from 'testdouble';
+import {MDCTab} from '../../../packages/mdc-tabs/tab';
 import {MDCTabs} from '../../../packages/mdc-tabs/tabs';
 
 function getFixture() {
@@ -44,6 +45,45 @@ suite('MDCTabs');
 
 test('attachTo returns a component instance', () => {
   assert.isOk(MDCTabs.attachTo(setupTest().root) instanceof MDCTabs);
+});
+
+test('#get tabs returns tabs', () => {
+  const {component} = setupTest();
+
+  assert.isArray(component.tabs);
+
+  for (const tab of component.tabs) {
+    assert.instanceOf(tab, MDCTab);
+  }
+});
+
+test('#get/set activeTab', () => {
+  const {component} = setupTest();
+
+  assert.equal(component.activeTab, component.tabs[0]);
+  component.activeTab = component.tabs[1];
+  assert.equal(component.activeTab, component.tabs[1]);
+});
+
+test('#set activeTabIndex', () => {
+  const {component} = setupTest();
+
+  component.activeTabIndex = 1;
+  assert.equal(component.activeTabIndex, 1);
+  component.activeTabIndex = 2;
+  assert.equal(component.activeTabIndex, 2);
+});
+
+test('#get computedWidth returns computed width', () => {
+  const {component} = setupTest();
+
+  assert.equal(component.computedWidth, 0);
+});
+
+test('#get computedLeft returns computed left offset', () => {
+  const {component} = setupTest();
+
+  assert.equal(component.computedLeft, 0);
 });
 
 test('adapter#addClass adds a class to the root element', () => {

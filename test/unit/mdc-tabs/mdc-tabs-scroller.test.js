@@ -78,6 +78,16 @@ test('attachTo returns a component instance', () => {
   assert.isTrue(MDCTabsScroller.attachTo(root) instanceof MDCTabsScroller);
 });
 
+test('#get listOfTabNodes returns list of tabs', () => {
+  const {component} = setupTest();
+
+  assert.isArray(component.listOfTabNodes);
+
+  for (const tab of component.listOfTabNodes) {
+    assert.instanceOf(tab, HTMLElement);
+  }
+});
+
 test('adapter#isRTL returns true if in RTL context', () => {
   const {component} = setupTest();
 
@@ -123,13 +133,6 @@ test('adapter#deregisterResizeHandler removes resize listener from component', (
   domEvents.emit(window, 'resize');
 
   td.verify(handler(td.matchers.anything()), {times: 0});
-});
-
-
-test('adapter#triggerNewLayout lays out the scrollable tabs', () => {
-  const {component} = setupTest();
-
-  component.getDefaultFoundation().adapter_.triggerNewLayout();
 });
 
 if (supportsCssVariables(window)) {
