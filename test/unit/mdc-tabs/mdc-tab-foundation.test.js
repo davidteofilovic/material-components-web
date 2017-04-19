@@ -37,9 +37,7 @@ test('default adapter returns a complete adapter implementation', () => {
 });
 
 function setupTest() {
-  const {foundation, mockAdapter} = setupFoundationTest(MDCTabFoundation);
-
-  return {foundation, mockAdapter};
+  return setupFoundationTest(MDCTabFoundation);
 }
 
 test('#init registers tab interaction handlers', () => {
