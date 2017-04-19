@@ -45,7 +45,7 @@
     bottom: 0;
     left: 0;
     transform-origin: left top;
-    transition: transform 240ms cubic-bezier(.4, 0, .2, 1);
+    transition: mdc-animation-enter(transform, 240ms);
     will-change: transform;
     visibility: hidden;
   }
@@ -246,7 +246,7 @@
     overflow: hidden;
 
     &__tabs {
-      transition: transform 240ms cubic-bezier(.4, 0, .2, 1);
+      transition: mdc-animation-enter(transform, 240ms);
       will-change: transform;
     }
   }
