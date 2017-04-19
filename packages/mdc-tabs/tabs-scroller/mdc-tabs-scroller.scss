@@ -1,0 +1,91 @@
+/**
+ * Copyright 2017 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@import "@material/animation/functions";
+@import "@material/theme/mixins";
+@import "@material/rtl/mixins";
+@import "./variables";
+
+// postcss-bem-linter: define tabs-scroller
+.mdc-tabs-scroller {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  background-color: inherit;
+
+  &__scroll-frame {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+    overflow: hidden;
+
+    &__tabs {
+      transition: mdc-animation-enter(transform, 240ms);
+      will-change: transform;
+    }
+  }
+
+  &__indicator {
+    @include mdc-anchor-reset;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $mdc-tabs-scroller-indicator-width;
+    height: 100%;
+
+    @include mdc-theme-prop(background-color, text-primary-on-dark);
+
+    @include mdc-theme-dark(".mdc-tabs") {
+      background-color: transparent;
+
+      @include mdc-theme-prop(color, text-primary-on-dark);
+    }
+
+    @include mdc-anchor-reset;
+
+    &__inner {
+      text-decoration: inherit;
+      cursor: inherit;
+      color: inherit;
+
+      &:focus {
+        outline-color: inherit;
+      }
+
+      @include mdc-rtl(".mdc-tabs-scroller") {
+        transform: rotate(180deg);
+      }
+    }
+
+    &__inner:hover {
+      color: inherit;
+
+      @include mdc-theme-dark(".mdc-tabs") {
+        @include mdc-theme-prop(color, text-secondary-on-dark);
+      }
+    }
+  }
+
+  &__indicator--disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+// postcss-bem-linter: end

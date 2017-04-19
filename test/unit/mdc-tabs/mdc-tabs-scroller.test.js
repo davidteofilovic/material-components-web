@@ -26,7 +26,7 @@ function getFixture() {
   return bel`
     <div>
       <div id="tabs-scroller" class="mdc-tabs-scroller">
-        <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--left">
+        <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--back">
           <a class="mdc-tabs-scroller__indicator__inner material-icons" href="#" aria-label="scroll back button">
             keyboard-arrow-left
           </a>
@@ -45,7 +45,7 @@ function getFixture() {
             <span class="mdc-tabs__indicator"></span>
           </nav>
         </div>
-        <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--right">
+        <div class="mdc-tabs-scroller__indicator mdc-tabs-scroller__indicator--forward">
           <a class="mdc-tabs-scroller__indicator__inner material-icons" href="#" aria-label="scroll forward button">
             keyboard-arrow-right
           </a>
@@ -58,16 +58,16 @@ function setupTest() {
   const fixture = getFixture();
   const root = fixture.querySelector('.mdc-tabs-scroller');
   const tabs = fixture.querySelector('.mdc-tabs-scroller__scroll-frame__tabs');
-  const leftIndicator =
-    fixture.querySelector('.mdc-tabs-scroller__indicator--left');
-  const rightIndicator =
-    fixture.querySelector('.mdc-tabs-scroller__indicator--right');
+  const backIndicator =
+    fixture.querySelector('.mdc-tabs-scroller__indicator--back');
+  const forwardIndicator =
+    fixture.querySelector('.mdc-tabs-scroller__indicator--forward');
   const scrollFrame =
     fixture.querySelector('.mdc-tabs-scroller__scroll-frame');
 
   const component = new MDCTabsScroller(root);
 
-  return {fixture, root, leftIndicator, rightIndicator, scrollFrame, tabs, component};
+  return {fixture, root, backIndicator, forwardIndicator, scrollFrame, tabs, component};
 }
 
 suite('MDCTabsScroller');
@@ -94,22 +94,22 @@ test('adapter#isRTL returns true if in RTL context', () => {
   assert.isFalse(component.getDefaultFoundation().adapter_.isRTL());
 });
 
-test('adapter#registerLeftIndicatorInteractionHandler', () => {
-  const {component, leftIndicator} = setupTest();
+test('adapter#registerBackIndicatorInteractionHandler', () => {
+  const {component, backIndicator} = setupTest();
   const handler = td.func('eventHandler');
 
-  component.getDefaultFoundation().adapter_.registerLeftIndicatorInteractionHandler(handler);
-  domEvents.emit(leftIndicator, 'click');
+  component.getDefaultFoundation().adapter_.registerBackIndicatorInteractionHandler(handler);
+  domEvents.emit(backIndicator, 'click');
 
   td.verify(handler(td.matchers.anything()));
 });
 
-test('adapter#registerRightIndicatorInteractionHandler', () => {
-  const {component, rightIndicator} = setupTest();
+test('adapter#registerForwardIndicatorInteractionHandler', () => {
+  const {component, forwardIndicator} = setupTest();
   const handler = td.func('eventHandler');
 
-  component.getDefaultFoundation().adapter_.registerRightIndicatorInteractionHandler(handler);
-  domEvents.emit(rightIndicator, 'click');
+  component.getDefaultFoundation().adapter_.registerForwardIndicatorInteractionHandler(handler);
+  domEvents.emit(forwardIndicator, 'click');
 
   td.verify(handler(td.matchers.anything()));
 });
@@ -136,28 +136,28 @@ test('adapter#deregisterResizeHandler removes resize listener from component', (
 });
 
 if (supportsCssVariables(window)) {
-  test('adapter#scrollLeft decreases translateX of tab group', () => {
+  test('adapter#scrollBack decreases translateX of tab group', () => {
     const {component} = setupTest();
     const rtlContext = false;
     const raf = createMockRaf();
     raf.flush();
 
     component.tabs.style.transform = component.tabs.style.webkitTransform = 'translateX(50px)';
-    component.getDefaultFoundation().adapter_.scrollLeft(rtlContext);
+    component.getDefaultFoundation().adapter_.scrollBack(rtlContext);
     raf.flush();
 
     assert.isTrue(component.tabs.style.webkitTransform === 'translateX(0px)');
     raf.restore();
   });
 
-  test('adapter#scrollRight increases translateX of tab group', () => {
+  test('adapter#scrollForward increases translateX of tab group', () => {
     const {component} = setupTest();
     const rtlContext = false;
     const raf = createMockRaf();
 
     raf.flush();
 
-    component.getDefaultFoundation().adapter_.scrollRight(rtlContext);
+    component.getDefaultFoundation().adapter_.scrollForward(rtlContext);
     raf.flush();
 
     assert.isTrue(component.tabs.style.webkitTransform === 'translateX(0px)');

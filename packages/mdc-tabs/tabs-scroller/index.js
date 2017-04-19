@@ -38,8 +38,8 @@ export class MDCTabsScroller extends MDCComponent {
     this.computedFrameWidth_ = 0;
     this.scrollFrame = this.root_.querySelector(MDCTabsScrollerFoundation.strings.FRAME_SELECTOR);
     this.tabs = this.root_.querySelector(MDCTabsScrollerFoundation.strings.TABS_SELECTOR);
-    this.shiftLeftTarget = this.root_.querySelector(MDCTabsScrollerFoundation.strings.INDICATOR_LEFT_SELECTOR);
-    this.shiftRightTarget = this.root_.querySelector(MDCTabsScrollerFoundation.strings.INDICATOR_RIGHT_SELECTOR);
+    this.shiftBackTarget = this.root_.querySelector(MDCTabsScrollerFoundation.strings.INDICATOR_BACK_SELECTOR);
+    this.shiftForwardTarget = this.root_.querySelector(MDCTabsScrollerFoundation.strings.INDICATOR_FORWARD_SELECTOR);
 
     requestAnimationFrame(() => this.layout_());
   }
@@ -48,25 +48,25 @@ export class MDCTabsScroller extends MDCComponent {
     return new MDCTabsScrollerFoundation({
       isRTL: () =>
         getComputedStyle(this.root_).getPropertyValue('direction') === 'rtl',
-      registerLeftIndicatorInteractionHandler: (handler) =>
-        this.shiftLeftTarget.addEventListener('click', handler),
-      deregisterLeftIndicatorInteractionHandler: (handler) =>
-        this.shiftLeftTarget.removeEventListener('click', handler),
-      registerRightIndicatorInteractionHandler: (handler) =>
-        this.shiftRightTarget.addEventListener('click', handler),
-      deregisterRightIndicatorInteractionHandler: (handler) =>
-        this.shiftRightTarget.removeEventListener('click', handler),
+      registerBackIndicatorInteractionHandler: (handler) =>
+        this.shiftBackTarget.addEventListener('click', handler),
+      deregisterBackIndicatorInteractionHandler: (handler) =>
+        this.shiftBackTarget.removeEventListener('click', handler),
+      registerForwardIndicatorInteractionHandler: (handler) =>
+        this.shiftForwardTarget.addEventListener('click', handler),
+      deregisterForwardIndicatorInteractionHandler: (handler) =>
+        this.shiftForwardTarget.removeEventListener('click', handler),
       registerWindowResizeHandler: (handler) =>
         window.addEventListener('resize', handler),
       deregisterWindowResizeHandler: (handler) =>
         window.removeEventListener('resize', handler),
       triggerNewLayout: () => requestAnimationFrame(() => this.layout_()),
-      scrollLeft: (isRTL) => this.scrollLeft(isRTL),
-      scrollRight: (isRTL) => this.scrollRight(isRTL),
+      scrollBack: (isRTL) => this.scrollBack(isRTL),
+      scrollForward: (isRTL) => this.scrollForward(isRTL),
     });
   }
 
-  scrollLeft(isRTL) {
+  scrollBack(isRTL) {
     let scrollTarget;
     let tabWidthAccumulator = 0;
 
@@ -97,7 +97,7 @@ export class MDCTabsScroller extends MDCComponent {
     this.scrollToTab_(scrollTarget);
   }
 
-  scrollRight(isRTL) {
+  scrollForward(isRTL) {
     let scrollTarget;
     const tabsOffset = this.computedFrameWidth_ + this.currentTranslateOffset_;
 
@@ -159,15 +159,15 @@ export class MDCTabsScroller extends MDCComponent {
 
   updateIndicatorEnabledStates_() {
     if (this.currentTranslateOffset_ === 0) {
-      this.shiftLeftTarget.classList.add(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
+      this.shiftBackTarget.classList.add(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     } else {
-      this.shiftLeftTarget.classList.remove(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
+      this.shiftBackTarget.classList.remove(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     }
 
     if (this.currentTranslateOffset_ + this.scrollFrame.offsetWidth > this.tabs.offsetWidth) {
-      this.shiftRightTarget.classList.add(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
+      this.shiftForwardTarget.classList.add(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     } else {
-      this.shiftRightTarget.classList.remove(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
+      this.shiftForwardTarget.classList.remove(MDCTabsScrollerFoundation.cssClasses.INDICATOR_DISABLED);
     }
   }
 }

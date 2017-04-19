@@ -29,22 +29,22 @@ test('exports cssClasses', () => {
 
 test('default adapter returns a complete adapter implementation', () => {
   verifyDefaultAdapter(MDCTabsScrollerFoundation, [
-    'isRTL', 'registerLeftIndicatorInteractionHandler',
-    'deregisterLeftIndicatorInteractionHandler',
-    'registerRightIndicatorInteractionHandler',
-    'deregisterRightIndicatorInteractionHandler',
+    'isRTL', 'registerBackIndicatorInteractionHandler',
+    'deregisterBackIndicatorInteractionHandler',
+    'registerForwardIndicatorInteractionHandler',
+    'deregisterForwardIndicatorInteractionHandler',
     'registerWindowResizeHandler', 'deregisterWindowResizeHandler',
-    'triggerNewLayout', 'scrollLeft', 'scrollRight',
+    'triggerNewLayout', 'scrollBack', 'scrollForward',
   ]);
 });
 
 function setupTest() {
   const {foundation, mockAdapter} = setupFoundationTest(MDCTabsScrollerFoundation);
-  const {FRAME_SELECTOR, TABS_SELECTOR, INDICATOR_RIGHT_SELECTOR,
-    INDICATOR_LEFT_SELECTOR} = MDCTabsScrollerFoundation.strings;
+  const {FRAME_SELECTOR, TABS_SELECTOR, INDICATOR_FORWARD_SELECTOR,
+    INDICATOR_BACK_SELECTOR} = MDCTabsScrollerFoundation.strings;
 
   return {foundation, mockAdapter, FRAME_SELECTOR, TABS_SELECTOR,
-    INDICATOR_RIGHT_SELECTOR, INDICATOR_LEFT_SELECTOR};
+    INDICATOR_FORWARD_SELECTOR, INDICATOR_BACK_SELECTOR};
 }
 
 test('#init registers interaction and resize handlers', () => {
@@ -53,8 +53,8 @@ test('#init registers interaction and resize handlers', () => {
 
   foundation.init();
 
-  td.verify(mockAdapter.registerLeftIndicatorInteractionHandler(isA(Function)));
-  td.verify(mockAdapter.registerRightIndicatorInteractionHandler(isA(Function)));
+  td.verify(mockAdapter.registerBackIndicatorInteractionHandler(isA(Function)));
+  td.verify(mockAdapter.registerForwardIndicatorInteractionHandler(isA(Function)));
   td.verify(mockAdapter.registerWindowResizeHandler(isA(Function)));
 });
 
@@ -64,7 +64,7 @@ test('#destroy deregisters interaction and resize handlers', () => {
 
   foundation.destroy();
 
-  td.verify(mockAdapter.deregisterLeftIndicatorInteractionHandler(isA(Function)));
-  td.verify(mockAdapter.deregisterRightIndicatorInteractionHandler(isA(Function)));
+  td.verify(mockAdapter.deregisterBackIndicatorInteractionHandler(isA(Function)));
+  td.verify(mockAdapter.deregisterForwardIndicatorInteractionHandler(isA(Function)));
   td.verify(mockAdapter.deregisterWindowResizeHandler(isA(Function)));
 });

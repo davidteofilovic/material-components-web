@@ -31,42 +31,42 @@ export default class MDCTabsScrollerFoundation extends MDCFoundation {
   static get defaultAdapter() {
     return {
       isRTL: () => /* boolean */ false,
-      registerLeftIndicatorInteractionHandler: (/* handler: EventListener */) => {},
-      deregisterLeftIndicatorInteractionHandler: (/* handler: EventListener */) => {},
-      registerRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
-      deregisterRightIndicatorInteractionHandler: (/* handler: EventListener */) => {},
+      registerBackIndicatorInteractionHandler: (/* handler: EventListener */) => {},
+      deregisterBackIndicatorInteractionHandler: (/* handler: EventListener */) => {},
+      registerForwardIndicatorInteractionHandler: (/* handler: EventListener */) => {},
+      deregisterForwardIndicatorInteractionHandler: (/* handler: EventListener */) => {},
       registerWindowResizeHandler: (/* handler: EventListener */) => {},
       deregisterWindowResizeHandler: () => {},
       triggerNewLayout: () => {},
-      scrollLeft: () => {},
-      scrollRight: () => {},
+      scrollBack: () => {},
+      scrollForward: () => {},
     };
   }
 
   constructor(adapter) {
     super(Object.assign(MDCTabsScrollerFoundation.defaultAdapter, adapter));
 
-    this.rightIndicatorClickHandler = () => this.scrollRight(this.adapter_.isRTL());
-    this.leftIndicatorClickHandler = () => this.scrollLeft(this.adapter_.isRTL());
+    this.forwardIndicatorClickHandler = () => this.scrollForward(this.adapter_.isRTL());
+    this.backIndicatorClickHandler = () => this.scrollBack(this.adapter_.isRTL());
   }
 
   init() {
-    this.adapter_.registerLeftIndicatorInteractionHandler(this.leftIndicatorClickHandler);
-    this.adapter_.registerRightIndicatorInteractionHandler(this.rightIndicatorClickHandler);
+    this.adapter_.registerBackIndicatorInteractionHandler(this.backIndicatorClickHandler);
+    this.adapter_.registerForwardIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
     this.adapter_.registerWindowResizeHandler(this.adapter_.triggerNewLayout);
   }
 
   destroy() {
-    this.adapter_.deregisterLeftIndicatorInteractionHandler(this.leftIndicatorClickHandler);
-    this.adapter_.deregisterRightIndicatorInteractionHandler(this.rightIndicatorClickHandler);
+    this.adapter_.deregisterBackIndicatorInteractionHandler(this.backIndicatorClickHandler);
+    this.adapter_.deregisterForwardIndicatorInteractionHandler(this.forwardIndicatorClickHandler);
     this.adapter_.deregisterWindowResizeHandler(this.adapter_.triggerNewLayout);
   }
 
-  scrollRight(isRTL) {
-    this.adapter_.scrollRight(isRTL);
+  scrollBack(isRTL) {
+    this.adapter_.scrollBack(isRTL);
   }
 
-  scrollLeft(isRTL) {
-    this.adapter_.scrollLeft(isRTL);
+  scrollForward(isRTL) {
+    this.adapter_.scrollForward(isRTL);
   }
 }

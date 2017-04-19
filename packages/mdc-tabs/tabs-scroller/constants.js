@@ -1,5 +1,5 @@
 /**
- * Copyright 2016 Google Inc. All Rights Reserved.
+ * Copyright 2017 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 export const cssClasses = {
   VISIBLE: 'mdc-tabs-scroller--visible',
   FOCUSED_CHILD: 'mdc-tabs-scroller--focused-child',
-  INDICATOR_RIGHT: 'mdc-tabs-scroller__indicator--right',
-  INDICATOR_LEFT: 'mdc-tabs-scroller__indicator--left',
+  INDICATOR_FORWARD: 'mdc-tabs-scroller__indicator--forward',
+  INDICATOR_BACK: 'mdc-tabs-scroller__indicator--back',
   INDICATOR_DISABLED: 'mdc-tabs-scroller__indicator--disabled',
 };
 
@@ -26,6 +26,6 @@ export const strings = {
   FRAME_SELECTOR: '.mdc-tabs-scroller__scroll-frame',
   TABS_SELECTOR: '.mdc-tabs-scroller__scroll-frame__tabs',
   TAB_SELECTOR: '.mdc-tab',
-  INDICATOR_RIGHT_SELECTOR: '.mdc-tabs-scroller__indicator--right',
-  INDICATOR_LEFT_SELECTOR: '.mdc-tabs-scroller__indicator--left',
+  INDICATOR_FORWARD_SELECTOR: '.mdc-tabs-scroller__indicator--forward',
+  INDICATOR_BACK_SELECTOR: '.mdc-tabs-scroller__indicator--back',
 };

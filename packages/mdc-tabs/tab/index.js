@@ -53,7 +53,12 @@ export class MDCTab extends MDCComponent {
 
   constructor(...args) {
     super(...args);
-    this.ripple_ = new MDCRipple(this.root_, new MDCRippleFoundation(MDCRipple.createAdapter(this)));
+
+    this.ripple_ = new MDCRippleFoundation(Object.assign(MDCRipple.createAdapter(this), {
+      isSurfaceActive: () => this.isActive,
+      isUnbounded: () => false,
+    }));
+    this.ripple_.init();
   }
 
   destroy() {

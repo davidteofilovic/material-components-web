@@ -14,10 +14,5 @@
  * limitations under the License.
  */
 
-export function isAncestor(possibleAncestor, el, getParent = (el) => el.parentElement) {
-  let parent = el;
-  while (parent && parent !== possibleAncestor) {
-    parent = getParent(parent);
-  }
-  return parent === possibleAncestor;
-}
+$mdc-tabs-text-color: rgba(black, .54);
+$mdc-tabs-active-text-color: rgba(black, .87);

@@ -1,0 +1,133 @@
+/**
+* Copyright 2017 Google Inc. All Rights Reserved.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+@import "@material/animation/functions";
+@import "@material/typography/mixins";
+@import "@material/theme/mixins";
+@import "@material/ripple/mixins";
+@import "@material/rtl/mixins";
+@import "./variables";
+@import "./mixins";
+
+// postcss-bem-linter: define tab
+.mdc-tab {
+  @include mdc-ripple-base;
+  @include mdc-ripple-bg((pseudo: "::before"));
+  @include mdc-ripple-fg((pseudo: "::after"));
+  @include mdc-anchor-reset;
+  @include mdc-typography(body2);
+
+  position: relative;
+  box-sizing: border-box;
+  display: table-cell;
+  height: 100%;
+  min-width: 160px;
+  overflow: hidden;
+  padding: 0 24px;
+  text-align: center;
+  vertical-align: middle;
+
+  @include mdc-theme-prop(color, text-secondary-on-light);
+
+  @include mdc-theme-dark(".mdc-tabs") {
+    @include mdc-theme-prop(color, text-secondary-on-dark);
+  }
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  @media screen and (max-width: 600px) {
+    min-width: 72px;
+    padding: 0 12px;
+  }
+
+  // postcss-bem-linter: ignore
+  &__icon {
+    @include mdc-icon-tab-content;
+
+    width: 24px;
+    height: 24px;
+
+    // postcss-bem-linter: ignore
+    .mdc-tabs--icons-with-text & {
+      margin-top: 4px;
+    }
+  }
+
+  &__icon-text {
+    @include mdc-icon-tab-content;
+  }
+
+  // postcss-bem-linter: ignore
+  &__icon + &__icon-text {
+    padding-top: 6px;
+  }
+}
+
+.mdc-tabs:not(.mdc-tabs-upgraded) .mdc-tab {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+    content: "";
+    width: calc(100% - 4px);
+    height: 2px;
+    display: none;
+    pointer-events: none;
+
+    @include mdc-theme-prop(background-color, text-primary-on-light);
+
+    @include mdc-theme-dark(".mdc-tabs") {
+      @include mdc-theme-prop(background-color, text-primary-on-dark);
+    }
+
+    .mdc-toolbar & {
+      @include mdc-theme-prop(background-color, text-primary-on-dark);
+
+      @include mdc-theme-dark(".mdc-tabs") {
+        @include mdc-theme-prop(background-color, text-primary-on-dark);
+      }
+    }
+  }
+
+  &--active,
+  &:active,
+  &:hover {
+    &::after {
+      display: initial;
+    }
+  }
+
+  &:not(.mdc-tab--active):hover::after {
+    opacity: .38;
+  }
+
+  &--active,
+  &:not(.mdc-tab--active):active::after {
+    opacity: .87;
+  }
+}
+
+.mdc-tab--active {
+  @include mdc-theme-prop(color, text-primary-on-light);
+
+  @include mdc-theme-dark(".mdc-tabs") {
+    @include mdc-theme-prop(color, text-primary-on-dark);
+  }
+}
+ // postcss-bem-linter: end
